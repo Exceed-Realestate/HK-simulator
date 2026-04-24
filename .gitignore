@@ -1,0 +1,8 @@
+# Internal working documents (not for public/client)
+Exceed_HK_Investor_Reply.md
+Exceed_Pitch_Update_Memo.md
+
+# OS/editor noise
+.DS_Store
+*.swp
+Thumbs.db
