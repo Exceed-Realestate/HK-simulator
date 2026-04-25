@@ -542,6 +542,114 @@
   }
   footer strong { color: var(--accent); }
 
+  /* ============ DEMO TOUR ============ */
+  .demo-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--primary);
+    color: #fff;
+    border: 2px solid var(--accent);
+    padding: 11px 22px;
+    border-radius: 6px;
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    margin-top: 14px;
+    transition: all 0.15s;
+    letter-spacing: 0.4px;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.12);
+  }
+  .demo-button:hover {
+    background: var(--accent);
+    color: var(--primary);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(201,169,97,0.4);
+  }
+  .demo-button .play-icon {
+    background: var(--accent);
+    color: var(--primary);
+    width: 24px; height: 24px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 9px;
+    transition: all 0.15s;
+  }
+  .demo-button:hover .play-icon {
+    background: var(--primary);
+    color: var(--accent);
+  }
+
+  body.demo-running { overflow-x: hidden; }
+  body.demo-running .demo-target {
+    position: relative;
+    outline: 3px solid var(--accent) !important;
+    outline-offset: 5px;
+    border-radius: 6px;
+    animation: demoPulse 1.4s ease-in-out infinite;
+    scroll-margin-top: 100px;
+    z-index: 50;
+  }
+  @keyframes demoPulse {
+    0%, 100% { outline-color: var(--accent); }
+    50%      { outline-color: #fff5d6; outline-offset: 7px; }
+  }
+
+  #demo-tooltip {
+    position: fixed;
+    background: var(--primary);
+    color: #fff;
+    padding: 18px 22px;
+    border-radius: 10px;
+    font-size: 13px;
+    line-height: 1.65;
+    z-index: 10001;
+    max-width: 340px;
+    width: calc(100vw - 32px);
+    box-sizing: border-box;
+    box-shadow: 0 16px 40px rgba(0,0,0,0.45);
+    animation: demoFadeIn 0.25s ease-out;
+    border: 2px solid var(--accent);
+  }
+  @keyframes demoFadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  #demo-tooltip .step-title {
+    font-weight: 700; color: var(--accent);
+    margin-bottom: 8px; font-size: 11px;
+    letter-spacing: 1.5px; text-transform: uppercase;
+  }
+  #demo-tooltip .step-text { color: #fff; }
+  #demo-tooltip .step-controls {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-top: 14px; gap: 14px;
+  }
+  #demo-tooltip .step-progress {
+    display: flex; gap: 5px;
+  }
+  #demo-tooltip .step-progress .dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: rgba(255,255,255,0.25); transition: all 0.25s;
+  }
+  #demo-tooltip .step-progress .dot.active {
+    background: var(--accent); width: 22px; border-radius: 3px;
+  }
+  #demo-tooltip .step-skip {
+    background: rgba(255,255,255,0.12);
+    color: #fff; border: 1px solid rgba(255,255,255,0.2);
+    padding: 5px 12px; border-radius: 4px;
+    font-size: 11px; cursor: pointer;
+    font-family: inherit; letter-spacing: 0.4px;
+  }
+  #demo-tooltip .step-skip:hover {
+    background: var(--accent); color: var(--primary);
+    border-color: var(--accent);
+  }
+
   /* ============ INLINE CITATIONS ============ */
   a.cite {
     display: inline-block;
@@ -807,6 +915,11 @@
     <h2>An End-to-End Strategy: Acquisition → Operation → Exit</h2>
     <p>Designed for Hong Kong investors (permanent and non-permanent residents): a coherent strategy spanning selection, financing, ownership, and HK repatriation. Three-question responses below, followed by an interactive exit simulator. All property brochures are available via the "Brochures" button in the top navigation.</p>
   </div>
+  <button class="demo-button" onclick="runDemo()">
+    <span class="play-icon">▶</span>
+    <span class="ja">使い方を30秒で見る</span>
+    <span class="en">See how it works (30s)</span>
+  </button>
 </div>
 
 <!-- ============ MAIN CONTENT ============ -->
@@ -1758,10 +1871,211 @@ AED (UAE bank account)</div>
 
 <footer>
   <strong>EXCEED REAL ESTATE L.L.C.</strong><br>
-  #2407 The Regal Tower, Business Bay, Dubai · TEL 04-529-9070 · info@exceed-re.ae · Commercial License No.1180254 / RERA Certificate No.35328
+  #2407 The Regal Tower, Business Bay, Dubai · TEL 04-529-9070 · info@exceed-re.ae · <a href="https://exceed.estate/" target="_blank" rel="noopener" style="color:var(--accent);text-decoration:none;border-bottom:1px dotted var(--accent)">exceed.estate</a> · Commercial License No.1180254 / RERA Certificate No.35328
 </footer>
 
+<!-- Demo tour tooltip -->
+<div id="demo-tooltip" style="display:none"></div>
+
 <script>
+// =========== DEMO TOUR ===========
+const demoSteps = [
+  {
+    target: '.nav-brochure-btn',
+    title_ja: 'STEP 1 ｜ 物件を選ぶ',
+    title_en: 'STEP 1 · Browse properties',
+    text_ja: '右上の「物件資料」ボタンをクリックすると、8物件のリストがモーダルで表示されます。',
+    text_en: 'Click "Brochures" top right to see all 8 listings in a modal.',
+    action: () => { setTimeout(() => openBrochureModal(), 600); },
+    delay: 3000
+  },
+  {
+    target: '.modal .brochure-card:nth-child(4)',
+    title_ja: 'STEP 2 ｜「試算」ボタンで自動反映',
+    title_en: 'STEP 2 · Click "Simulate" — auto-loads',
+    text_ja: '気になる物件の「試算」ボタンを押すと、シミュレーターに自動的に反映されます。',
+    text_en: 'Click "Simulate" on any property — it loads into the simulator automatically.',
+    action: () => { setTimeout(() => loadPreset('sixSenses3'), 1200); },
+    delay: 3500
+  },
+  {
+    target: '.input-panel .sim-card:nth-child(2)',
+    title_ja: 'STEP 3 ｜ ローン条件を調整',
+    title_en: 'STEP 3 · Adjust loan terms',
+    text_ja: 'LTV・金利・保有期間を変更すると、結果がリアルタイム更新されます。',
+    text_en: 'Change LTV, rate, and holding period — results update live.',
+    action: () => { setTimeout(() => animateInput('ltv', 50, 65), 600); },
+    delay: 3500
+  },
+  {
+    target: '.kpi-grid',
+    title_ja: 'STEP 4 ｜ 主要KPIをチェック',
+    title_en: 'STEP 4 · Check the KPIs',
+    text_ja: '初期手出し・売却額・IRR・香港着金額（HKD）が即座に算出されます。',
+    text_en: 'Initial outlay, sale price, IRR and net-to-Hong Kong (HKD) all update instantly.',
+    delay: 3500
+  },
+  {
+    target: '.scenario-grid',
+    title_ja: 'STEP 5 ｜ 3シナリオ比較',
+    title_en: 'STEP 5 · Compare 3 exit scenarios',
+    text_ja: 'オフプラン売却・引渡後短期・中長期保有の3つを横並びで比較できます。',
+    text_en: 'Off-plan flip, post-handover short, and long-term hold — side by side.',
+    delay: 3500
+  }
+];
+
+let demoCancelled = false;
+
+async function runDemo() {
+  demoCancelled = false;
+  document.body.classList.add('demo-running');
+  // Scroll to top first
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+  await wait(500);
+
+  for (let i = 0; i < demoSteps.length; i++) {
+    if (demoCancelled) break;
+    await runDemoStep(demoSteps[i], i, demoSteps.length);
+  }
+  cleanupDemo();
+  if (!demoCancelled) {
+    // Final scroll back up
+    setTimeout(() => window.scrollTo({ top: document.getElementById('simulator').offsetTop - 80, behavior: 'smooth' }), 400);
+  }
+}
+
+async function runDemoStep(step, index, total) {
+  // Clear previous highlight
+  document.querySelectorAll('.demo-target').forEach(el => el.classList.remove('demo-target'));
+
+  // Find target
+  const target = document.querySelector(step.target);
+  if (!target) {
+    console.warn('Demo: target not found', step.target);
+    return;
+  }
+
+  // Scroll target into view (unless inside modal)
+  const inModal = target.closest('.modal-overlay');
+  if (!inModal) {
+    target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    await wait(700);
+  } else {
+    await wait(300);
+  }
+
+  if (demoCancelled) return;
+
+  // Highlight
+  target.classList.add('demo-target');
+  showDemoTooltip(target, step, index, total);
+
+  // Run action
+  if (step.action) step.action();
+
+  // Wait for step duration
+  await wait(step.delay || 3000);
+}
+
+function showDemoTooltip(target, step, index, total) {
+  const tt = document.getElementById('demo-tooltip');
+  const lang = document.body.getAttribute('data-lang') || 'ja';
+  const title = step['title_' + lang];
+  const text = step['text_' + lang];
+  const skipLabel = lang === 'ja' ? 'スキップ' : 'Skip';
+  const stepLabel = lang === 'ja' ? `${index+1} / ${total}` : `${index+1} of ${total}`;
+
+  let dots = '';
+  for (let i = 0; i < total; i++) {
+    dots += `<span class="dot ${i <= index ? 'active' : ''}"></span>`;
+  }
+
+  tt.innerHTML = `
+    <div class="step-title">${title}</div>
+    <div class="step-text">${text}</div>
+    <div class="step-controls">
+      <div class="step-progress">${dots}</div>
+      <button class="step-skip" onclick="cancelDemo()">${skipLabel}</button>
+    </div>
+  `;
+  tt.style.display = 'block';
+
+  // Position tooltip near target (after measuring)
+  requestAnimationFrame(() => {
+    const targetRect = target.getBoundingClientRect();
+    const ttRect = tt.getBoundingClientRect();
+    const margin = 16;
+
+    let top = targetRect.bottom + margin;
+    let left = targetRect.left;
+
+    // If tooltip would overflow bottom, place above target
+    if (top + ttRect.height > window.innerHeight - margin) {
+      top = targetRect.top - ttRect.height - margin;
+    }
+    // If still off-screen (very tall element), place at top of viewport
+    if (top < margin) top = margin;
+
+    // Center horizontally over target if narrow target
+    if (targetRect.width < ttRect.width) {
+      left = targetRect.left + (targetRect.width - ttRect.width) / 2;
+    }
+
+    // Clamp to viewport
+    if (left + ttRect.width > window.innerWidth - margin) {
+      left = window.innerWidth - ttRect.width - margin;
+    }
+    if (left < margin) left = margin;
+
+    tt.style.top = top + 'px';
+    tt.style.left = left + 'px';
+  });
+}
+
+function cancelDemo() {
+  demoCancelled = true;
+  cleanupDemo();
+}
+
+function cleanupDemo() {
+  document.querySelectorAll('.demo-target').forEach(el => el.classList.remove('demo-target'));
+  const tt = document.getElementById('demo-tooltip');
+  if (tt) tt.style.display = 'none';
+  document.body.classList.remove('demo-running');
+  // Close modal if it was opened during demo
+  const modal = document.getElementById('brochureModal');
+  if (modal && modal.classList.contains('open')) {
+    closeBrochureModal();
+  }
+}
+
+function wait(ms) {
+  return new Promise(r => setTimeout(r, ms));
+}
+
+function animateInput(id, from, to, duration = 1400) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  const start = performance.now();
+  function frame(now) {
+    const t = Math.min(1, (now - start) / duration);
+    const ease = t < 0.5 ? 2*t*t : 1 - Math.pow(-2*t + 2, 2) / 2;
+    const v = from + (to - from) * ease;
+    el.value = Math.round(v);
+    el.dispatchEvent(new Event('input', { bubbles: true }));
+    if (t < 1) requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+}
+
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape' && document.body.classList.contains('demo-running')) {
+    cancelDemo();
+  }
+});
+
+// =========== ORIGINAL SCRIPT BELOW ===========
 function setLanguage(lang) {
   document.body.setAttribute("data-lang", lang);
   document.getElementById("btn-ja").classList.toggle("active", lang === "ja");
