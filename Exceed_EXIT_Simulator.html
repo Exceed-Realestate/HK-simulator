@@ -586,16 +586,24 @@
   body.demo-running { overflow-x: hidden; }
   body.demo-running .demo-target {
     position: relative;
-    outline: 3px solid var(--accent) !important;
+    outline: 4px solid #10b981 !important;
     outline-offset: 5px;
     border-radius: 6px;
-    animation: demoPulse 1.4s ease-in-out infinite;
+    animation: demoPulse 1.2s ease-in-out infinite;
+    box-shadow: 0 0 0 6px rgba(16, 185, 129, 0.18), 0 0 24px rgba(16, 185, 129, 0.5);
     scroll-margin-top: 100px;
     z-index: 50;
   }
   @keyframes demoPulse {
-    0%, 100% { outline-color: var(--accent); }
-    50%      { outline-color: #fff5d6; outline-offset: 7px; }
+    0%, 100% {
+      outline-color: #10b981;
+      box-shadow: 0 0 0 6px rgba(16, 185, 129, 0.18), 0 0 24px rgba(16, 185, 129, 0.5);
+    }
+    50% {
+      outline-color: #6ee7b7;
+      outline-offset: 8px;
+      box-shadow: 0 0 0 12px rgba(16, 185, 129, 0.28), 0 0 36px rgba(16, 185, 129, 0.7);
+    }
   }
 
   #demo-tooltip {
@@ -610,16 +618,16 @@
     max-width: 340px;
     width: calc(100vw - 32px);
     box-sizing: border-box;
-    box-shadow: 0 16px 40px rgba(0,0,0,0.45);
+    box-shadow: 0 16px 40px rgba(0,0,0,0.45), 0 0 0 1px rgba(16, 185, 129, 0.4);
     animation: demoFadeIn 0.25s ease-out;
-    border: 2px solid var(--accent);
+    border: 2px solid #10b981;
   }
   @keyframes demoFadeIn {
     from { opacity: 0; transform: translateY(8px); }
     to   { opacity: 1; transform: translateY(0); }
   }
   #demo-tooltip .step-title {
-    font-weight: 700; color: var(--accent);
+    font-weight: 700; color: #6ee7b7;
     margin-bottom: 8px; font-size: 11px;
     letter-spacing: 1.5px; text-transform: uppercase;
   }
@@ -636,7 +644,7 @@
     background: rgba(255,255,255,0.25); transition: all 0.25s;
   }
   #demo-tooltip .step-progress .dot.active {
-    background: var(--accent); width: 22px; border-radius: 3px;
+    background: #10b981; width: 22px; border-radius: 3px;
   }
   #demo-tooltip .step-skip {
     background: rgba(255,255,255,0.12);
@@ -646,8 +654,8 @@
     font-family: inherit; letter-spacing: 0.4px;
   }
   #demo-tooltip .step-skip:hover {
-    background: var(--accent); color: var(--primary);
-    border-color: var(--accent);
+    background: #10b981; color: #fff;
+    border-color: #10b981;
   }
 
   /* ============ INLINE CITATIONS ============ */
