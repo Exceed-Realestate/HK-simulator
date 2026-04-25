@@ -542,9 +542,79 @@
   }
   footer strong { color: var(--accent); }
 
+  /* ============ RESOURCES BLOCK ============ */
+  .resources-block {
+    margin-top: 28px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border);
+  }
+  .resources-block summary {
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    background: var(--bg);
+    color: var(--primary);
+    border: 1px solid var(--border);
+    padding: 10px 20px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    list-style: none;
+    user-select: none;
+    transition: all 0.15s;
+    font-family: inherit;
+  }
+  .resources-block summary::-webkit-details-marker { display: none; }
+  .resources-block summary::before {
+    content: "▸";
+    display: inline-block;
+    margin-right: 8px;
+    transition: transform 0.2s;
+    font-size: 10px;
+  }
+  .resources-block[open] summary::before { transform: rotate(90deg); }
+  .resources-block summary:hover {
+    background: var(--primary); color: #fff; border-color: var(--primary);
+  }
+  .resources-content {
+    margin-top: 18px;
+    padding: 22px 26px;
+    background: #fafbfc;
+    border-radius: 6px;
+    border-left: 3px solid var(--accent);
+  }
+  .resources-content h5 {
+    color: var(--primary);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin: 18px 0 8px;
+    font-weight: 700;
+  }
+  .resources-content h5:first-child { margin-top: 0; }
+  .resources-content ul {
+    margin: 0; padding-left: 20px;
+    font-size: 13px;
+    line-height: 2;
+  }
+  .resources-content a {
+    color: var(--primary);
+    text-decoration: none;
+    border-bottom: 1px dotted var(--accent-dark);
+    font-weight: 600;
+  }
+  .resources-content a:hover { color: var(--accent-dark); border-bottom-style: solid; }
+  .resources-content small {
+    color: var(--text-muted);
+    font-size: 11.5px;
+    font-weight: 400;
+  }
+
   @media print {
     nav.sticky-nav, .print-btn, .lang-toggle, .nav-brochure-btn, .modal-overlay { display: none !important; }
     .sim-card, .answer-block { box-shadow: none; border: 1px solid var(--border); page-break-inside: avoid; }
+    .resources-block[open] .resources-content { display: block; }
   }
 
   /* ============ MOBILE RESPONSIVENESS ============ */
@@ -752,15 +822,18 @@
         </table>
 
         <h3>1-2. 香港居住者のLTV・金利条件（2026年4月時点）</h3>
+        <p style="font-size:12px;color:var(--text-muted);background:#fafbfc;padding:12px 14px;border-left:3px solid var(--accent);border-radius:0 4px 4px 0;margin-bottom:12px">
+          <strong>「永住権保有者（HKPR）」とは：</strong> 香港の永住権ID所持者。香港に7年以上連続居住、もしくは香港出生者を指します。安定した居住履歴・収入実績がUAE銀行側で評価されるため、最大60% LTVでの非居住者ローン組成が可能です。
+        </p>
         <table class="data-table">
           <thead><tr><th>投資家ステータス</th><th class="num">LTV上限</th><th>金利（AED建て）</th><th>金利（USD建て）</th><th class="num">審査期間</th></tr></thead>
           <tbody>
-            <tr><td>香港永住権保有者（UAE非居住者）</td><td class="num"><strong>50〜60%</strong></td><td>EIBOR + 1.75〜2.50%<br><small>実効 6.0〜7.2%</small></td><td>SOFR + 2.00〜3.00%<br><small>実効 6.5〜7.5%</small></td><td class="num">4〜6週間</td></tr>
-            <tr><td>香港非永住権保有者</td><td class="num"><strong>40〜50%</strong></td><td>EIBOR + 2.00〜3.00%<br><small>実効 6.5〜7.8%</small></td><td>SOFR + 2.50〜3.50%<br><small>実効 7.0〜8.0%</small></td><td class="num">6〜8週間</td></tr>
+            <tr><td>香港永住権保有者（UAE非居住者）</td><td class="num"><strong>〜60%</strong></td><td>EIBOR + 1.75〜2.50%<br><small>実効 6.0〜7.2%</small></td><td>SOFR + 2.00〜3.00%<br><small>実効 6.5〜7.5%</small></td><td class="num">4〜6週間</td></tr>
             <tr><td>UAE居住者（投資VISA）</td><td class="num"><strong>70〜80%</strong></td><td>EIBOR + 1.25〜1.75%<br><small>実効 5.5〜6.5%</small></td><td>—</td><td class="num">2〜3週間</td></tr>
           </tbody>
         </table>
         <p style="font-size:12px;color:var(--text-muted)">※EIBOR 3M ≒ 4.3%、USD SOFR ≒ 4.3%（2026年4月時点）。ブランデッドレジデンスは保守的評価傾向あり。</p>
+        <p style="font-size:11.5px;color:var(--text-muted);font-style:italic;margin-top:8px">※数値は2026年Q1時点の業界一般水準を示しております。具体的なオファー条件は個別銀行・借入主体属性・物件・取引時期により変動いたします。確定見積りはHolo社経由にて取得可能です。</p>
 
         <h3>1-3. クロスボーダーローンの可否</h3>
         <ul>
@@ -797,15 +870,18 @@
         </table>
 
         <h3>1-2. LTV & Rate Structure for HK Residents (April 2026)</h3>
+        <p style="font-size:12px;color:var(--text-muted);background:#fafbfc;padding:12px 14px;border-left:3px solid var(--accent);border-radius:0 4px 4px 0;margin-bottom:12px">
+          <strong>HK Permanent Resident (HKPR):</strong> Holds a Hong Kong Permanent ID after 7+ years of continuous residence, or born in HK. Stable residence and verifiable income history are well-recognised by UAE banks, allowing non-resident financing up to 60% LTV.
+        </p>
         <table class="data-table">
           <thead><tr><th>Status</th><th class="num">Max LTV</th><th>Rate (AED)</th><th>Rate (USD)</th><th class="num">Approval</th></tr></thead>
           <tbody>
-            <tr><td>HK Permanent Resident (UAE non-res)</td><td class="num"><strong>50–60%</strong></td><td>EIBOR + 1.75–2.50%<br><small>All-in 6.0–7.2%</small></td><td>SOFR + 2.00–3.00%<br><small>All-in 6.5–7.5%</small></td><td class="num">4–6 weeks</td></tr>
-            <tr><td>HK Non-Permanent Resident</td><td class="num"><strong>40–50%</strong></td><td>EIBOR + 2.00–3.00%<br><small>All-in 6.5–7.8%</small></td><td>SOFR + 2.50–3.50%<br><small>All-in 7.0–8.0%</small></td><td class="num">6–8 weeks</td></tr>
+            <tr><td>HK Permanent Resident (UAE non-res)</td><td class="num"><strong>up to 60%</strong></td><td>EIBOR + 1.75–2.50%<br><small>All-in 6.0–7.2%</small></td><td>SOFR + 2.00–3.00%<br><small>All-in 6.5–7.5%</small></td><td class="num">4–6 weeks</td></tr>
             <tr><td>UAE Resident (Investor Visa)</td><td class="num"><strong>70–80%</strong></td><td>EIBOR + 1.25–1.75%<br><small>All-in 5.5–6.5%</small></td><td>—</td><td class="num">2–3 weeks</td></tr>
           </tbody>
         </table>
         <p style="font-size:12px;color:var(--text-muted)">* EIBOR 3M ≈ 4.3%, USD SOFR ≈ 4.3% (April 2026). Branded residences typically underwritten conservatively.</p>
+        <p style="font-size:11.5px;color:var(--text-muted);font-style:italic;margin-top:8px">* Values reflect Q1 2026 industry levels. Actual offered terms vary by bank, borrower profile, property, and timing. Firm quotes available via Holo.</p>
 
         <h3>1-3. Cross-Border Loan Availability</h3>
         <ul>
@@ -826,6 +902,34 @@
         </ol>
         <p style="font-size:12px;color:var(--text-muted)">* For corporate borrowers, add BR, shareholder structure, and 2 years of audited financials.</p>
       </div>
+
+      <details class="resources-block">
+        <summary><span class="ja">資料・出典を確認する</span><span class="en">View Sources & References</span></summary>
+        <div class="resources-content">
+          <h5><span class="ja">規制・公的機関</span><span class="en">Regulators & Public Bodies</span></h5>
+          <ul>
+            <li><a href="https://www.centralbank.ae/en/" target="_blank" rel="noopener">UAE Central Bank</a> <small><span class="ja">— モーゲージ規制 31/2013、LTV上限の根拠</span><span class="en">— Mortgage Regulation 31/2013, basis for LTV ceilings</span></small></li>
+            <li><a href="https://www.centralbank.ae/en/our-operations/monetary-and-financial-stability-functions/eibor/" target="_blank" rel="noopener">UAE Central Bank — EIBOR</a> <small><span class="ja">— AED建て金利の基準ベンチマーク</span><span class="en">— EIBOR benchmark for AED-denominated rates</span></small></li>
+            <li><a href="https://www.newyorkfed.org/markets/reference-rates/sofr" target="_blank" rel="noopener">New York Fed — SOFR</a> <small><span class="ja">— USD建て金利の基準ベンチマーク</span><span class="en">— SOFR benchmark for USD-denominated rates</span></small></li>
+          </ul>
+          <h5><span class="ja">取扱銀行（公開料金表）</span><span class="en">Partner Banks (Published Schedules)</span></h5>
+          <ul>
+            <li><a href="https://www.mashreqbank.com/uae/en/personal/loans/home-loans" target="_blank" rel="noopener">Mashreq Bank — Home Loans</a></li>
+            <li><a href="https://www.emiratesnbd.com/en/loans/home-loans" target="_blank" rel="noopener">Emirates NBD — Home Loans</a></li>
+            <li><a href="https://www.adcb.com/en/personal/loans/home-loan/" target="_blank" rel="noopener">ADCB — Home Loans</a></li>
+            <li><a href="https://www.rakbank.ae/personal-banking/loans/home-loans" target="_blank" rel="noopener">RAK Bank — Home Loans</a></li>
+            <li><a href="https://www.dib.ae/personal/finance/home-finance" target="_blank" rel="noopener">Dubai Islamic Bank — Home Finance</a></li>
+            <li><a href="https://www.hsbc.ae/loans/products/home-loans/" target="_blank" rel="noopener">HSBC UAE — Home Loans</a></li>
+            <li><a href="https://www.sc.com/ae/loans/home-loans/" target="_blank" rel="noopener">Standard Chartered UAE — Home Loans</a></li>
+          </ul>
+          <h5><span class="ja">クロスボーダー（香港側）</span><span class="en">Cross-Border (HK Side)</span></h5>
+          <ul>
+            <li><a href="https://www.hsbc.com.hk/en-hk/premier/" target="_blank" rel="noopener">HSBC Hong Kong — Premier</a></li>
+            <li><a href="https://www.sc.com/hk/priority-banking/" target="_blank" rel="noopener">Standard Chartered Hong Kong — Priority Banking</a></li>
+          </ul>
+          <p style="font-size:11px;color:var(--text-muted);margin-top:14px;font-style:italic"><span class="ja">※ 数値は2026年Q1時点の業界一般水準。具体的なオファー条件は個別銀行・属性により変動。</span><span class="en">* Values reflect Q1 2026 industry levels. Actual offers vary by bank and borrower profile.</span></p>
+        </div>
+      </details>
     </div>
   </section>
 
@@ -1005,6 +1109,24 @@ AED (UAE bank account)</div>
           <li>Branded residences (Six Senses / Ritz / ORLA) operate as <strong>standalone leases — not hotel rental pools</strong></li>
         </ul>
       </div>
+
+      <details class="resources-block">
+        <summary><span class="ja">資料・出典を確認する</span><span class="en">View Sources & References</span></summary>
+        <div class="resources-content">
+          <h5><span class="ja">取得時諸費用（Dubai Land Department）</span><span class="en">Acquisition Fees (Dubai Land Department)</span></h5>
+          <ul>
+            <li><a href="https://dubailand.gov.ae/en/" target="_blank" rel="noopener">Dubai Land Department</a> <small><span class="ja">— DLD登記料 4%・モーゲージ登記 0.25% 等の公式料金表</span><span class="en">— Official schedule: DLD 4%, mortgage registration 0.25%, etc.</span></small></li>
+            <li><a href="https://dubailand.gov.ae/en/eservices/real-estate-services-trustees/" target="_blank" rel="noopener">DLD — Trustee Offices</a> <small><span class="ja">— Trustee料金（AED 4,000）の根拠</span><span class="en">— Trustee fee schedule (AED 4,000)</span></small></li>
+            <li><a href="https://www.dubailand.gov.ae/en/eservices/mollak/" target="_blank" rel="noopener">RERA Mollak</a> <small><span class="ja">— サービスチャージ管理システム</span><span class="en">— Service charge management system</span></small></li>
+          </ul>
+          <h5><span class="ja">為替・送金</span><span class="en">FX & Remittance</span></h5>
+          <ul>
+            <li><a href="https://www.centralbank.ae/en/" target="_blank" rel="noopener">UAE Central Bank</a> <small><span class="ja">— AED-USDペッグ（3.6725、1997年〜）</span><span class="en">— AED-USD peg at 3.6725 (since 1997)</span></small></li>
+            <li><a href="https://www.hkma.gov.hk/eng/key-functions/money/linked-exchange-rate-system/" target="_blank" rel="noopener">HKMA — Linked Exchange Rate System</a> <small><span class="ja">— HKD-USDペッグ（7.75〜7.85、1983年〜）</span><span class="en">— HKD-USD peg at 7.75–7.85 (since 1983)</span></small></li>
+          </ul>
+          <p style="font-size:11px;color:var(--text-muted);margin-top:14px;font-style:italic"><span class="ja">※ エージェント手数料・モーゲージブローカー手数料は業界相場。家具家電費用は物件・選定により変動。</span><span class="en">* Agent fees and mortgage broker fees reflect industry standard. Furniture costs vary by property and specification.</span></p>
+        </div>
+      </details>
     </div>
   </section>
 
@@ -1188,6 +1310,30 @@ AED (UAE bank account)</div>
           <strong>Dual tax benefit:</strong> UAE 0% × HK territorial regime = <strong>near-zero effective tax rate</strong> on CG and rental income repatriated to HK. Formal tax opinions available via our adviser partners in both jurisdictions.
         </div>
       </div>
+
+      <details class="resources-block">
+        <summary><span class="ja">資料・出典を確認する</span><span class="en">View Sources & References</span></summary>
+        <div class="resources-content">
+          <h5><span class="ja">ドバイ不動産市場データ</span><span class="en">Dubai Property Market Data</span></h5>
+          <ul>
+            <li><a href="https://dubailand.gov.ae/en/open-data/" target="_blank" rel="noopener">Dubai Land Department — Open Data</a> <small><span class="ja">— 取引件数・流通額の一次データ</span><span class="en">— Transaction count and volume primary data</span></small></li>
+            <li><a href="https://www.dubaipulse.gov.ae/" target="_blank" rel="noopener">Dubai Pulse</a> <small><span class="ja">— 政府公式データハブ</span><span class="en">— Official government data hub</span></small></li>
+            <li><a href="https://dxbinteract.com/" target="_blank" rel="noopener">DXB Interact</a> <small><span class="ja">— DLDデータの可視化（市況把握用）</span><span class="en">— DLD data visualisation</span></small></li>
+          </ul>
+          <h5><span class="ja">UAE税制</span><span class="en">UAE Taxation</span></h5>
+          <ul>
+            <li><a href="https://tax.gov.ae/en/" target="_blank" rel="noopener">UAE Federal Tax Authority</a> <small><span class="ja">— 個人保有不動産にCGT・賃料所得税なし</span><span class="en">— No CGT or rental income tax for individuals</span></small></li>
+            <li><a href="https://u.ae/en/information-and-services/finance-and-investment/taxation" target="_blank" rel="noopener">UAE Government — Taxation Overview</a> <small><span class="ja">— 個人所得税ゼロ等の根拠</span><span class="en">— Basis for zero personal income tax</span></small></li>
+          </ul>
+          <h5><span class="ja">香港税制（属地主義・CRS）</span><span class="en">Hong Kong Tax (Territorial · CRS)</span></h5>
+          <ul>
+            <li><a href="https://www.ird.gov.hk/eng/tax/bus_pft.htm" target="_blank" rel="noopener">HK IRD — Profits Tax (Territorial)</a> <small><span class="ja">— 属地主義の根拠</span><span class="en">— Basis for territorial taxation</span></small></li>
+            <li><a href="https://www.ird.gov.hk/eng/tax/dta_aeoi.htm" target="_blank" rel="noopener">HK IRD — AEOI / CRS</a> <small><span class="ja">— UAE-HK間の自動情報交換</span><span class="en">— UAE-HK automatic information exchange</span></small></li>
+            <li><a href="https://www.ird.gov.hk/eng/tax/edu.htm" target="_blank" rel="noopener">HK IRD — Estate Duty</a> <small><span class="ja">— 相続税（2006年廃止）</span><span class="en">— Estate duty (abolished 2006)</span></small></li>
+          </ul>
+          <p style="font-size:11px;color:var(--text-muted);margin-top:14px;font-style:italic"><span class="ja">※ 税務オピニオンは個別事情により異なります。具体的な節税策は税理士・弁護士にご相談ください。</span><span class="en">* Tax positions vary by individual circumstances. For specific structuring, please consult a qualified tax adviser.</span></p>
+        </div>
+      </details>
     </div>
   </section>
 
