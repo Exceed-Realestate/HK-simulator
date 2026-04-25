@@ -542,6 +542,32 @@
   }
   footer strong { color: var(--accent); }
 
+  /* ============ INLINE CITATIONS ============ */
+  a.cite {
+    display: inline-block;
+    font-size: 0.72em;
+    vertical-align: 0.18em;
+    color: var(--accent-dark);
+    text-decoration: none;
+    margin: 0 1px 0 2px;
+    padding: 1px 5px;
+    border-radius: 3px;
+    background: rgba(201, 169, 97, 0.12);
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    transition: all 0.12s;
+    line-height: 1.2;
+  }
+  a.cite:hover {
+    background: var(--primary);
+    color: #fff;
+  }
+  a.cite::before {
+    content: "↗ ";
+    opacity: 0.6;
+    font-size: 0.85em;
+  }
+
   /* ============ RESOURCES BLOCK ============ */
   .resources-block {
     margin-top: 28px;
@@ -821,19 +847,19 @@
           </tbody>
         </table>
 
-        <h3>1-2. 香港居住者のLTV・金利条件（2026年4月時点）</h3>
+        <h3>1-2. 香港居住者のLTV・金利条件<a class="cite" href="https://www.centralbank.ae/en/cbuae-publications/regulations/" target="_blank" rel="noopener" title="UAE Central Bank Mortgage Regulation 31/2013">UAE中銀規制</a>（2026年4月時点）</h3>
         <p style="font-size:12px;color:var(--text-muted);background:#fafbfc;padding:12px 14px;border-left:3px solid var(--accent);border-radius:0 4px 4px 0;margin-bottom:12px">
-          <strong>「永住権保有者（HKPR）」とは：</strong> 香港の永住権ID所持者。香港に7年以上連続居住、もしくは香港出生者を指します。安定した居住履歴・収入実績がUAE銀行側で評価されるため、最大65% LTVでの非居住者ローン組成が可能です。
+          <strong>「永住権保有者（HKPR）」とは：</strong> 香港の永住権ID所持者。香港に7年以上連続居住、もしくは香港出生者を指します<a class="cite" href="https://www.gov.hk/en/residents/immigration/idcard/hkid/applyforhkid.htm" target="_blank" rel="noopener" title="Hong Kong Government — HKID requirements">HK政府</a>。安定した居住履歴・収入実績がUAE銀行側で評価されるため、最大65% LTVでの非居住者ローン組成が可能です。
         </p>
         <table class="data-table">
           <thead><tr><th>投資家ステータス</th><th class="num">LTV上限</th><th>金利（AED建て）</th><th>金利（USD建て）</th><th class="num">審査期間</th></tr></thead>
           <tbody>
-            <tr><td>香港永住権保有者（UAE非居住者）</td><td class="num"><strong>〜65%</strong></td><td>EIBOR + 1.75〜2.50%<br><small>実効 6.0〜7.2%</small></td><td>SOFR + 2.00〜3.00%<br><small>実効 6.5〜7.5%</small></td><td class="num">4〜6週間</td></tr>
+            <tr><td>香港永住権保有者（UAE非居住者）</td><td class="num"><strong>〜65%</strong><a class="cite" href="https://www.mashreqbank.com/uae/en/personal/loans/home-loans" target="_blank" rel="noopener" title="Mashreq Bank — Home Loans (non-resident)">Mashreq</a></td><td>EIBOR + 1.75〜2.50%<a class="cite" href="https://www.centralbank.ae/en/our-operations/monetary-and-financial-stability-functions/eibor/" target="_blank" rel="noopener" title="UAE Central Bank — EIBOR benchmark">EIBOR</a><br><small>実効 6.0〜7.2%</small></td><td>SOFR + 2.00〜3.00%<a class="cite" href="https://www.newyorkfed.org/markets/reference-rates/sofr" target="_blank" rel="noopener" title="New York Fed — SOFR">SOFR</a><br><small>実効 6.5〜7.5%</small></td><td class="num">4〜6週間</td></tr>
             <tr><td>UAE居住者（投資VISA）</td><td class="num"><strong>70〜80%</strong></td><td>EIBOR + 1.25〜1.75%<br><small>実効 5.5〜6.5%</small></td><td>—</td><td class="num">2〜3週間</td></tr>
           </tbody>
         </table>
         <p style="font-size:12px;color:var(--text-muted)">※EIBOR 3M ≒ 4.3%、USD SOFR ≒ 4.3%（2026年4月時点）。<strong>金利は変動方式（EIBOR連動）</strong>が標準です。ブランデッドレジデンスについても通常物件と同等の条件で組成可能です。</p>
-        <p style="font-size:11.5px;color:var(--text-muted);font-style:italic;margin-top:8px">※65% LTVは Mashreq Bank の非居住者向けプログラムにて、香港永住権保有者（HKPR）向けに対応可能です。<strong>早期返済違約金は AED 10,000 前後</strong>（一般的水準）。具体的なオファー条件は個別銀行・借入主体属性・物件・取引時期により変動。確定見積りは弊社提携ブローカー経由にて取得可能です。</p>
+        <p style="font-size:11.5px;color:var(--text-muted);font-style:italic;margin-top:8px">※65% LTVは Mashreq Bank<a class="cite" href="https://www.mashreqbank.com/uae/en/personal/loans/home-loans" target="_blank" rel="noopener" title="Mashreq Bank — Home Loans">公式</a> の非居住者向けプログラムにて、香港永住権保有者（HKPR）向けに対応可能です。<strong>早期返済違約金は AED 10,000 前後</strong>（UAE中銀規制により上限はローン残高の1%またはAED 10,000のいずれか低い方<a class="cite" href="https://www.centralbank.ae/en/cbuae-publications/regulations/" target="_blank" rel="noopener" title="UAE Central Bank Mortgage Regulation — Early Settlement Fee Cap">出典</a>）。具体的なオファー条件は個別銀行・借入主体属性・物件・取引時期により変動。確定見積りは弊社提携ブローカー経由にて取得可能です。</p>
 
         <h3>1-3. クロスボーダーローンの可否</h3>
         <ul>
@@ -869,19 +895,19 @@
           </tbody>
         </table>
 
-        <h3>1-2. LTV & Rate Structure for HK Residents (April 2026)</h3>
+        <h3>1-2. LTV & Rate Structure for HK Residents<a class="cite" href="https://www.centralbank.ae/en/cbuae-publications/regulations/" target="_blank" rel="noopener" title="UAE Central Bank Mortgage Regulation 31/2013">UAE CB</a> (April 2026)</h3>
         <p style="font-size:12px;color:var(--text-muted);background:#fafbfc;padding:12px 14px;border-left:3px solid var(--accent);border-radius:0 4px 4px 0;margin-bottom:12px">
-          <strong>HK Permanent Resident (HKPR):</strong> Holds a Hong Kong Permanent ID after 7+ years of continuous residence, or born in HK. Stable residence and verifiable income history are well-recognised by UAE banks, allowing non-resident financing up to 65% LTV.
+          <strong>HK Permanent Resident (HKPR):</strong> Holds a Hong Kong Permanent ID after 7+ years of continuous residence, or born in HK<a class="cite" href="https://www.gov.hk/en/residents/immigration/idcard/hkid/applyforhkid.htm" target="_blank" rel="noopener" title="HK Government — HKID requirements">HK Gov</a>. Stable residence and verifiable income history are well-recognised by UAE banks, allowing non-resident financing up to 65% LTV.
         </p>
         <table class="data-table">
           <thead><tr><th>Status</th><th class="num">Max LTV</th><th>Rate (AED)</th><th>Rate (USD)</th><th class="num">Approval</th></tr></thead>
           <tbody>
-            <tr><td>HK Permanent Resident (UAE non-res)</td><td class="num"><strong>up to 65%</strong></td><td>EIBOR + 1.75–2.50%<br><small>All-in 6.0–7.2%</small></td><td>SOFR + 2.00–3.00%<br><small>All-in 6.5–7.5%</small></td><td class="num">4–6 weeks</td></tr>
+            <tr><td>HK Permanent Resident (UAE non-res)</td><td class="num"><strong>up to 65%</strong><a class="cite" href="https://www.mashreqbank.com/uae/en/personal/loans/home-loans" target="_blank" rel="noopener" title="Mashreq Bank — Home Loans (non-resident)">Mashreq</a></td><td>EIBOR + 1.75–2.50%<a class="cite" href="https://www.centralbank.ae/en/our-operations/monetary-and-financial-stability-functions/eibor/" target="_blank" rel="noopener" title="UAE Central Bank — EIBOR benchmark">EIBOR</a><br><small>All-in 6.0–7.2%</small></td><td>SOFR + 2.00–3.00%<a class="cite" href="https://www.newyorkfed.org/markets/reference-rates/sofr" target="_blank" rel="noopener" title="New York Fed — SOFR">SOFR</a><br><small>All-in 6.5–7.5%</small></td><td class="num">4–6 weeks</td></tr>
             <tr><td>UAE Resident (Investor Visa)</td><td class="num"><strong>70–80%</strong></td><td>EIBOR + 1.25–1.75%<br><small>All-in 5.5–6.5%</small></td><td>—</td><td class="num">2–3 weeks</td></tr>
           </tbody>
         </table>
         <p style="font-size:12px;color:var(--text-muted)">* EIBOR 3M ≈ 4.3%, USD SOFR ≈ 4.3% (April 2026). <strong>Variable rate (EIBOR-linked)</strong> is the standard structure. Branded residences are underwritten on the same terms as standard properties.</p>
-        <p style="font-size:11.5px;color:var(--text-muted);font-style:italic;margin-top:8px">* 65% LTV is achievable via Mashreq Bank's non-resident programme for Hong Kong Permanent Residents. <strong>Early settlement fee is approximately AED 10,000</strong> (standard). Actual offered terms vary by bank, borrower profile, property, and timing. Firm quotes available via our partner broker network.</p>
+        <p style="font-size:11.5px;color:var(--text-muted);font-style:italic;margin-top:8px">* 65% LTV is achievable via Mashreq Bank's non-resident programme<a class="cite" href="https://www.mashreqbank.com/uae/en/personal/loans/home-loans" target="_blank" rel="noopener" title="Mashreq Bank — Home Loans">Mashreq</a> for Hong Kong Permanent Residents. <strong>Early settlement fee is approximately AED 10,000</strong> (UAE Central Bank caps this at the lower of 1% of loan or AED 10,000<a class="cite" href="https://www.centralbank.ae/en/cbuae-publications/regulations/" target="_blank" rel="noopener" title="UAE Central Bank Mortgage Regulation — Early Settlement Fee Cap">UAE CB</a>). Actual offered terms vary by bank, borrower profile, property, and timing. Firm quotes available via our partner broker network.</p>
 
         <h3>1-3. Cross-Border Loan Availability</h3>
         <ul>
@@ -955,7 +981,7 @@
       </span>
 
       <div class="lang-ja">
-        <h3>2-1. 代表3物件の初期自己資金額（オフプラン購入前提）</h3>
+        <h3>2-1. 代表3物件の初期自己資金額（オフプラン購入前提）<a class="cite" href="https://dubailand.gov.ae/en/" target="_blank" rel="noopener" title="Dubai Land Department — Official Fee Schedule">DLD公式</a></h3>
 
         <h4>ケースA：Ritz-Carlton Creekside 2BR（AED 13.0M / 2,524 sqft）</h4>
         <table class="data-table">
@@ -1033,7 +1059,7 @@ AED（UAE銀行口座）</div>
           <li>適用：中〜大口（USD 500k超）、コスト最適化を重視する場合</li>
         </ul>
 
-        <p style="font-size:12px;color:var(--text-muted)">※ AED・HKDは共にUSDにペッグされた通貨のため、USD経由が事実上最安となります。大口の場合、ドバイで制度化されているUSDT経由送金もご相談可能です。</p>
+        <p style="font-size:12px;color:var(--text-muted)">※ AED<a class="cite" href="https://www.centralbank.ae/en/" target="_blank" rel="noopener" title="UAE Central Bank — AED-USD peg at 3.6725 since 1997">UAE中銀</a>・HKD<a class="cite" href="https://www.hkma.gov.hk/eng/key-functions/money/linked-exchange-rate-system/" target="_blank" rel="noopener" title="HKMA — HKD-USD peg at 7.75-7.85 since 1983">HKMA</a>は共にUSDにペッグされた通貨のため、USD経由が事実上最安となります。大口の場合、ドバイで制度化されているUSDT経由送金もご相談可能です。</p>
 
         <h3>2-3. 運用期キャッシュアウト（Case A・LTV 40%・空室10%考慮）</h3>
         <table class="data-table">
@@ -1061,7 +1087,7 @@ AED（UAE銀行口座）</div>
       </div>
 
       <div class="lang-en">
-        <h3>2-1. Initial Outlay — 3 Representative Properties (Off-plan)</h3>
+        <h3>2-1. Initial Outlay — 3 Representative Properties (Off-plan)<a class="cite" href="https://dubailand.gov.ae/en/" target="_blank" rel="noopener" title="Dubai Land Department — Official Fee Schedule">DLD</a></h3>
 
         <h4>Case A: Ritz-Carlton Creekside 2BR (AED 13.0M / 2,524 sqft)</h4>
         <table class="data-table">
@@ -1139,7 +1165,7 @@ AED (UAE bank account)</div>
           <li>Best for: medium to large tickets (above USD 500k), cost-optimised structures</li>
         </ul>
 
-        <p style="font-size:12px;color:var(--text-muted)">* Both AED and HKD are pegged to USD, so the USD-bridged route is in effect the cheapest. For large tickets, regulated USDT routing is also available in Dubai.</p>
+        <p style="font-size:12px;color:var(--text-muted)">* Both AED<a class="cite" href="https://www.centralbank.ae/en/" target="_blank" rel="noopener" title="UAE Central Bank — AED-USD peg at 3.6725 since 1997">UAE CB</a> and HKD<a class="cite" href="https://www.hkma.gov.hk/eng/key-functions/money/linked-exchange-rate-system/" target="_blank" rel="noopener" title="HKMA — HKD-USD peg at 7.75-7.85 since 1983">HKMA</a> are pegged to USD, so the USD-bridged route is in effect the cheapest. For large tickets, regulated USDT routing is also available in Dubai.</p>
 
         <h3>2-3. Holding-Period Cash Flow (Case A · 40% LTV · 10% vacancy)</h3>
         <table class="data-table">
@@ -1254,8 +1280,8 @@ AED (UAE bank account)</div>
         </table>
         <h4>流動性評価（2025年実績ベース）</h4>
         <ul>
-          <li>ドバイ・プライム・セカンダリー市場は年間流通額 <strong>約 USD 320億規模</strong></li>
-          <li>AED 15〜50M帯の物件はバイヤー層が厚く、通常 <strong>3〜6ヶ月で買主確定</strong></li>
+          <li>ドバイ・プライム・セカンダリー市場は年間流通額 <strong>約 USD 320億規模</strong><a class="cite" href="https://dubailand.gov.ae/en/open-data/" target="_blank" rel="noopener" title="Dubai Land Department — Open Data (Annual Transaction Volume)">DLD Open Data</a></li>
+          <li>AED 15〜50M帯の物件はバイヤー層が厚く、通常 <strong>3〜6ヶ月で買主確定</strong><a class="cite" href="https://dxbinteract.com/" target="_blank" rel="noopener" title="DXB Interact — Dubai Property Transaction Analytics">DXB Interact</a></li>
           <li>AED 100M超のウルトラプライム帯は、<strong>売却期間 6〜18ヶ月</strong> を見込む必要あり</li>
         </ul>
 
@@ -1264,20 +1290,20 @@ AED (UAE bank account)</div>
           <div>
             <h4>UAE側（売却時）</h4>
             <ul>
-              <li>キャピタルゲイン課税：<strong style="color:var(--positive)">0%</strong></li>
-              <li>賃料所得課税：<strong style="color:var(--positive)">0%</strong></li>
+              <li>キャピタルゲイン課税：<strong style="color:var(--positive)">0%</strong><a class="cite" href="https://u.ae/en/information-and-services/finance-and-investment/taxation" target="_blank" rel="noopener" title="UAE Government — No personal income/CGT">UAE政府</a></li>
+              <li>賃料所得課税：<strong style="color:var(--positive)">0%</strong><a class="cite" href="https://tax.gov.ae/en/" target="_blank" rel="noopener" title="UAE Federal Tax Authority">UAE FTA</a></li>
               <li>相続税・贈与税：<strong style="color:var(--positive)">0%</strong></li>
               <li>送金規制：なし（即時送金可能）</li>
-              <li>DLD transfer fee 4% は原則買主負担（交渉可）</li>
+              <li>DLD transfer fee 4% は原則買主負担（交渉可）<a class="cite" href="https://dubailand.gov.ae/en/" target="_blank" rel="noopener" title="Dubai Land Department — Transfer Fee Schedule">DLD</a></li>
               <li>売却エージェント手数料：2% + VAT</li>
             </ul>
           </div>
           <div>
             <h4>香港側（受取時）</h4>
             <ul>
-              <li><strong>属地主義（Territorial Tax System）</strong>：香港外発生のCG・賃料は<strong style="color:var(--positive)">原則非課税</strong></li>
-              <li>相続税：<strong style="color:var(--positive)">0%</strong>（2006年廃止）</li>
-              <li><strong>CRS対応</strong>：UAE→HK IRDへ自動情報交換あり</li>
+              <li><strong>属地主義（Territorial Tax System）</strong>：香港外発生のCG・賃料は<strong style="color:var(--positive)">原則非課税</strong><a class="cite" href="https://www.ird.gov.hk/eng/tax/bus_pft.htm" target="_blank" rel="noopener" title="HK Inland Revenue Department — Profits Tax (Territorial)">HK IRD</a></li>
+              <li>相続税：<strong style="color:var(--positive)">0%</strong>（2006年廃止<a class="cite" href="https://www.ird.gov.hk/eng/tax/edu.htm" target="_blank" rel="noopener" title="HK IRD — Estate Duty (abolished 2006)">IRD</a>）</li>
+              <li><strong>CRS対応</strong>：UAE→HK IRDへ自動情報交換あり<a class="cite" href="https://www.ird.gov.hk/eng/tax/dta_aeoi.htm" target="_blank" rel="noopener" title="HK IRD — Automatic Exchange of Financial Account Information (CRS)">CRS</a></li>
               <li>MPF・強制積立：対象外</li>
             </ul>
           </div>
@@ -1334,8 +1360,8 @@ AED (UAE bank account)</div>
         </table>
         <h4>Liquidity Assessment (2025 actuals)</h4>
         <ul>
-          <li>Dubai prime secondary market: ~<strong>USD 32 billion</strong> annual transaction volume</li>
-          <li>AED 15–50M band has deep buyer pools — <strong>3–6 months to identified buyer</strong> typical</li>
+          <li>Dubai prime secondary market: ~<strong>USD 32 billion</strong> annual transaction volume<a class="cite" href="https://dubailand.gov.ae/en/open-data/" target="_blank" rel="noopener" title="Dubai Land Department — Open Data (Annual Transaction Volume)">DLD Open Data</a></li>
+          <li>AED 15–50M band has deep buyer pools — <strong>3–6 months to identified buyer</strong> typical<a class="cite" href="https://dxbinteract.com/" target="_blank" rel="noopener" title="DXB Interact — Dubai Property Transaction Analytics">DXB Interact</a></li>
           <li>Ultra-prime (AED 100M+) requires <strong>6–18 months</strong></li>
         </ul>
 
@@ -1344,20 +1370,20 @@ AED (UAE bank account)</div>
           <div>
             <h4>UAE side (at sale)</h4>
             <ul>
-              <li>Capital gains tax: <strong style="color:var(--positive)">0%</strong></li>
-              <li>Rental income tax: <strong style="color:var(--positive)">0%</strong></li>
+              <li>Capital gains tax: <strong style="color:var(--positive)">0%</strong><a class="cite" href="https://u.ae/en/information-and-services/finance-and-investment/taxation" target="_blank" rel="noopener" title="UAE Government — No personal income/CGT">UAE Gov</a></li>
+              <li>Rental income tax: <strong style="color:var(--positive)">0%</strong><a class="cite" href="https://tax.gov.ae/en/" target="_blank" rel="noopener" title="UAE Federal Tax Authority">UAE FTA</a></li>
               <li>Inheritance / gift tax: <strong style="color:var(--positive)">0%</strong></li>
               <li>FX controls: none</li>
-              <li>DLD 4% typically borne by buyer (negotiable)</li>
+              <li>DLD 4% typically borne by buyer (negotiable)<a class="cite" href="https://dubailand.gov.ae/en/" target="_blank" rel="noopener" title="Dubai Land Department — Transfer Fee Schedule">DLD</a></li>
               <li>Sell-side agent fee: 2% + VAT</li>
             </ul>
           </div>
           <div>
             <h4>HK side (at receipt)</h4>
             <ul>
-              <li><strong>Territorial regime</strong>: foreign-sourced CG / rent <strong style="color:var(--positive)">non-taxable</strong></li>
-              <li>Inheritance tax: <strong style="color:var(--positive)">0%</strong> (abolished 2006)</li>
-              <li><strong>CRS</strong>: UAE→HK IRD auto-exchange of account info</li>
+              <li><strong>Territorial regime</strong>: foreign-sourced CG / rent <strong style="color:var(--positive)">non-taxable</strong><a class="cite" href="https://www.ird.gov.hk/eng/tax/bus_pft.htm" target="_blank" rel="noopener" title="HK Inland Revenue Department — Profits Tax (Territorial)">HK IRD</a></li>
+              <li>Inheritance tax: <strong style="color:var(--positive)">0%</strong> (abolished 2006<a class="cite" href="https://www.ird.gov.hk/eng/tax/edu.htm" target="_blank" rel="noopener" title="HK IRD — Estate Duty (abolished 2006)">IRD</a>)</li>
+              <li><strong>CRS</strong>: UAE→HK IRD auto-exchange of account info<a class="cite" href="https://www.ird.gov.hk/eng/tax/dta_aeoi.htm" target="_blank" rel="noopener" title="HK IRD — Automatic Exchange of Financial Account Information (CRS)">CRS</a></li>
               <li>MPF: not applicable (foreign real estate income)</li>
             </ul>
           </div>
