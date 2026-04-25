@@ -1239,7 +1239,7 @@ AED (UAE bank account)</div>
           <div class="info-card" style="border-top:3px solid var(--s1)">
             <div class="label">シナリオ① オフプラン・リセール</div>
             <h4 style="margin:8px 0;color:var(--primary)">保有 12〜30ヶ月</h4>
-            <p style="font-size:12px;margin:0">34%支払完了後NOC取得でassignment可能。<br>値上がり率：<strong>年率 +8〜15%</strong><br>流動性：★★★★☆</p>
+            <p style="font-size:12px;margin:0">物件価格の<strong>44%支払完了後</strong>にNOC取得でassignment可能（デベロッパー共通基準）。<br>値上がり率：<strong>年率 +8〜15%</strong><br>流動性：★★★★☆</p>
           </div>
           <div class="info-card" style="border-top:3px solid var(--s2)">
             <div class="label">シナリオ② 引渡後・短期売却</div>
@@ -1254,8 +1254,9 @@ AED (UAE bank account)</div>
         </div>
 
         <h3>3-2. 物件別 推奨EXITシナリオ・売却益レンジ</h3>
+        <p style="font-size:12px;color:var(--text-muted);margin-bottom:8px"><strong>※ 売却益レンジは「累計（保有期間中の総値上がり想定）」</strong>であり、年率ではありません。例えば「+30〜55%」は推奨保有期間（4〜7年）終了時点での累積キャピタルゲインを示しております。</p>
         <table class="data-table">
-          <thead><tr><th>物件</th><th>推奨シナリオ</th><th class="num">想定売却益レンジ</th><th>流動性評価</th></tr></thead>
+          <thead><tr><th>物件</th><th>推奨シナリオ</th><th class="num">想定売却益レンジ（累計）</th><th>流動性評価</th></tr></thead>
           <tbody>
             <tr><td>Ritz-Carlton Creekside 2BR</td><td>② または ③</td><td class="num">+30〜55%</td><td>★★★★★</td></tr>
             <tr><td>One Za'abeel 2BR</td><td>① または ②</td><td class="num">+25〜45%</td><td>★★★★☆</td></tr>
@@ -1319,7 +1320,7 @@ AED (UAE bank account)</div>
           <div class="info-card" style="border-top:3px solid var(--s1)">
             <div class="label">(1) Off-Plan Assignment Flip</div>
             <h4 style="margin:8px 0;color:var(--primary)">Hold 12–30 months</h4>
-            <p style="font-size:12px;margin:0">Assignment after ≥34% paid + NOC.<br>Appreciation: <strong>+8–15% p.a.</strong><br>Liquidity: ★★★★☆</p>
+            <p style="font-size:12px;margin:0">Assignment available once <strong>≥44% of price paid</strong> + developer NOC obtained (uniform across developers).<br>Appreciation: <strong>+8–15% p.a.</strong><br>Liquidity: ★★★★☆</p>
           </div>
           <div class="info-card" style="border-top:3px solid var(--s2)">
             <div class="label">(2) Post-Handover Short Sale</div>
@@ -1334,8 +1335,9 @@ AED (UAE bank account)</div>
         </div>
 
         <h3>3-2. Recommended Exit Scenarios & Gain Ranges by Property</h3>
+        <p style="font-size:12px;color:var(--text-muted);margin-bottom:8px"><strong>* Gain ranges are cumulative (total appreciation over the recommended holding period)</strong>, not annual. For example "+30–55%" represents the cumulative capital gain at the end of the recommended hold (4–7 years).</p>
         <table class="data-table">
-          <thead><tr><th>Property</th><th>Recommended</th><th class="num">Gain Range</th><th>Liquidity</th></tr></thead>
+          <thead><tr><th>Property</th><th>Recommended</th><th class="num">Gain Range (cumulative)</th><th>Liquidity</th></tr></thead>
           <tbody>
             <tr><td>Ritz-Carlton Creekside 2BR</td><td>(2) or (3)</td><td class="num">+30–55%</td><td>★★★★★</td></tr>
             <tr><td>One Za'abeel 2BR</td><td>(1) or (2)</td><td class="num">+25–45%</td><td>★★★★☆</td></tr>
@@ -1566,7 +1568,7 @@ AED (UAE bank account)</div>
           <div class="scenario-grid">
             <div class="scenario s1">
               <div class="scenario-title"><span class="ja">シナリオ① オフプラン・リセール</span><span class="en">(1) Off-Plan Assignment</span></div>
-              <div class="scenario-desc"><span class="ja">34%支払完了後NOC取得 / 2年保有</span><span class="en">NOC after ≥34% paid / 2-yr hold</span></div>
+              <div class="scenario-desc"><span class="ja">44%支払完了後NOC取得 / 2年保有</span><span class="en">NOC after ≥44% paid / 2-yr hold</span></div>
               <div class="scenario-metric"><span><span class="ja">累計リターン</span><span class="en">Total Return</span></span><span class="val" id="s1Return">—</span></div>
               <div class="scenario-metric"><span><span class="ja">年率 IRR</span><span class="en">IRR p.a.</span></span><span class="val" id="s1Irr">—</span></div>
               <div class="scenario-metric"><span><span class="ja">HK着金ネット</span><span class="en">Net to HK</span></span><span class="val" id="s1Net">—</span></div>
@@ -1811,7 +1813,7 @@ const labels = {
     downPayment: "頭金（物件価格の自己資金部分）", downPaymentNote: "ローン控除後",
     dld: "DLD登記料（4% + AED 580）", dldNote: "物件価格×4%",
     trustee: "Trustee / Title / Oqood", trusteeNote: "各種登記",
-    noc: "NOC手数料", nocNote: "デベロッパー発行",
+    noc: "NOC手数料", nocNote: "業界平均・物件価格無関係",
     agentFee: "エージェント手数料（2% + VAT）", agentFeeNote: "物件価格 × 2% + VAT 5%",
     mortgageReg: "モーゲージ登記料（0.25%）", mortgageRegNote: "ローン元本×0.25% + AED 290",
     brokerFee: "モーゲージブローカー手数料（1%）", brokerFeeNote: "ローン元本×1%",
@@ -1830,7 +1832,7 @@ const labels = {
     downPayment: "Down payment (equity portion)", downPaymentNote: "After loan",
     dld: "DLD registration (4% + AED 580)", dldNote: "4% of price",
     trustee: "Trustee / Title / Oqood", trusteeNote: "Registrations",
-    noc: "NOC fee", nocNote: "Developer-issued",
+    noc: "NOC fee", nocNote: "Industry average · same regardless of price",
     agentFee: "Agent fee (2% + VAT)", agentFeeNote: "2% + 5% VAT",
     mortgageReg: "Mortgage registration (0.25%)", mortgageRegNote: "0.25% of loan + AED 290",
     brokerFee: "Mortgage broker fee (1%)", brokerFeeNote: "1% of loan principal",
