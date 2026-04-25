@@ -546,6 +546,107 @@
     nav.sticky-nav, .print-btn, .lang-toggle, .nav-brochure-btn, .modal-overlay { display: none !important; }
     .sim-card, .answer-block { box-shadow: none; border: 1px solid var(--border); page-break-inside: avoid; }
   }
+
+  /* ============ MOBILE RESPONSIVENESS ============ */
+  html, body { overflow-x: hidden; max-width: 100vw; }
+
+  @media (max-width: 768px) {
+    body { font-size: 13px; }
+    /* Header */
+    header.site-header { padding: 18px 16px; }
+    header.site-header h1 { font-size: 17px; }
+    header.site-header .subtitle { font-size: 9px; letter-spacing: 0.8px; }
+    .brand-logo { width: 40px; height: 40px; }
+    .brand { gap: 12px; }
+    .header-inner { gap: 12px; }
+    .header-actions { gap: 8px; flex-wrap: wrap; }
+    .lang-toggle button { padding: 6px 12px; font-size: 11px; }
+    .print-btn { padding: 7px 12px; font-size: 11px; letter-spacing: 0.5px; }
+
+    /* Sticky nav */
+    nav.sticky-nav { padding: 0 12px; }
+    .nav-link { padding: 12px 12px; font-size: 12px; }
+    .nav-brochure-btn {
+      padding: 8px 14px; font-size: 11px; letter-spacing: 0.5px;
+      margin-left: 8px;
+    }
+    .nav-brochure-btn .count-badge { padding: 1px 6px; font-size: 10px; }
+
+    /* Hero */
+    .hero { margin: 16px; padding: 20px; border-radius: 8px; }
+    .hero h2 { font-size: 17px; line-height: 1.5; }
+    .hero p { font-size: 12px; line-height: 1.7; }
+
+    /* Container & sections */
+    .container { padding: 0 16px; }
+    .qa-section { margin-bottom: 28px; }
+    .section-header { padding-left: 14px; border-left-width: 4px; }
+    .section-header h2 { font-size: 19px; line-height: 1.4; }
+    .section-header .desc { font-size: 12px; }
+    .section-header .kicker { font-size: 11px; letter-spacing: 1.4px; }
+
+    .question-block { padding: 14px 16px; margin-bottom: 18px; }
+    .question-block .q-text { font-size: 12.5px; line-height: 1.7; }
+    .question-block::before { font-size: 10px; padding: 2px 9px; left: 14px; }
+
+    .answer-block { padding: 18px 16px; border-radius: 6px; }
+    .answer-block h3 { font-size: 15px; margin: 18px 0 10px; padding-bottom: 6px; }
+    .answer-block h4 { font-size: 13px; margin: 14px 0 6px; }
+    .answer-block p, .answer-block ul, .answer-block ol, .answer-block li { font-size: 12.5px; }
+
+    /* Data tables — let them scroll horizontally instead of overflowing */
+    .answer-block table.data-table,
+    .sim-card table.data-table {
+      display: block;
+      overflow-x: auto;
+      white-space: nowrap;
+      -webkit-overflow-scrolling: touch;
+    }
+    table.data-table th, table.data-table td { padding: 8px 10px; font-size: 12px; }
+
+    /* Code blocks */
+    .code-block { font-size: 10.5px; padding: 12px 14px; line-height: 1.7; }
+
+    /* Callouts */
+    .callout { padding: 12px 14px; font-size: 12.5px; line-height: 1.7; }
+
+    /* Simulator */
+    .sim-wrapper { margin-top: 36px; padding-top: 24px; }
+    .sim-title-bar { padding: 16px 20px; border-radius: 8px; }
+    .sim-title-bar h2 { font-size: 17px; }
+    .sim-title-bar .subtitle { font-size: 11px; }
+
+    .sim-card { padding: 16px; border-radius: 6px; }
+    .sim-card h3 { font-size: 12px; }
+
+    .kpi { padding: 14px; }
+    .kpi-value { font-size: 18px; }
+    .kpi-label { font-size: 10px; }
+
+    .scenario { padding: 14px; }
+    .scenario-title { font-size: 11.5px; }
+
+    /* Modal */
+    .modal-overlay { padding: 16px 8px; }
+    .modal-header { padding: 16px 18px; }
+    .modal-header h2 { font-size: 16px; }
+    .modal-header .subtitle { font-size: 10px; }
+    .modal-body { padding: 16px; }
+    .modal-grid { grid-template-columns: 1fr; gap: 12px; }
+    .brochure-card { padding: 14px; }
+
+    /* Footer */
+    footer { padding: 24px 16px; font-size: 10.5px; }
+  }
+
+  @media (max-width: 420px) {
+    /* Even tighter on small phones */
+    header.site-header h1 { font-size: 15px; }
+    .nav-link { padding: 11px 10px; font-size: 11.5px; }
+    .nav-brochure-btn { padding: 7px 10px; font-size: 10px; }
+    .section-header h2 { font-size: 17px; }
+    .scenario-grid, .kpi-grid { gap: 10px; }
+  }
 </style>
 </head>
 <body data-lang="ja">
@@ -750,19 +851,20 @@
       </span>
 
       <div class="lang-ja">
-        <h3>2-1. 代表3物件の初期自己資金額（オフプラン・50%ローン前提）</h3>
+        <h3>2-1. 代表3物件の初期自己資金額（オフプラン購入前提）</h3>
 
         <h4>ケースA：Ritz-Carlton Creekside 2BR（AED 15.4M）</h4>
         <table class="data-table">
           <thead><tr><th>項目</th><th class="num">AED</th><th class="num">HKD</th><th>備考</th></tr></thead>
           <tbody>
-            <tr><td>物件価格（50%自己資金部分）</td><td class="num">7,700,000</td><td class="num">16,016,000</td><td>残50%はローン</td></tr>
+            <tr><td>物件価格（60%自己資金部分）</td><td class="num">9,240,000</td><td class="num">19,219,200</td><td>残40%はローン</td></tr>
             <tr><td>DLD登記料（4%）</td><td class="num">616,580</td><td class="num">1,282,486</td><td>物件価格×4%</td></tr>
             <tr><td>Trustee / Title / Oqood / NOC</td><td class="num">12,250</td><td class="num">25,480</td><td>各種登記料</td></tr>
-            <tr><td>エージェント手数料（2.1%）</td><td class="num">323,400</td><td class="num">672,672</td><td>物件価格×2.1%</td></tr>
-            <tr><td>モーゲージ登記料（0.25%）</td><td class="num">19,540</td><td class="num">40,643</td><td>ローン元本×0.25%</td></tr>
-            <tr><td>家具家電</td><td class="num">400,000</td><td class="num">832,000</td><td>エントリーレベル</td></tr>
-            <tr class="total"><td>初期手出し合計</td><td class="num">約 9,071,770</td><td class="num">約 18,869,281</td><td></td></tr>
+            <tr><td>エージェント手数料（2% + VAT）</td><td class="num">323,400</td><td class="num">672,672</td><td>物件価格 × 2% + VAT 5%</td></tr>
+            <tr><td>モーゲージ登記料（0.25%）</td><td class="num">15,690</td><td class="num">32,635</td><td>ローン元本×0.25% + AED 290</td></tr>
+            <tr><td>モーゲージブローカー手数料（1%）</td><td class="num">61,600</td><td class="num">128,128</td><td>ローン元本×1%</td></tr>
+            <tr><td>家具家電</td><td class="num">0</td><td class="num">0</td><td>物件付属</td></tr>
+            <tr class="total"><td>初期手出し合計</td><td class="num">約 10,269,520</td><td class="num">約 21,360,602</td><td></td></tr>
           </tbody>
         </table>
 
@@ -813,19 +915,20 @@ AED（UAE銀行口座）</div>
       </div>
 
       <div class="lang-en">
-        <h3>2-1. Initial Outlay — 3 Representative Properties (Off-plan, 50% LTV)</h3>
+        <h3>2-1. Initial Outlay — 3 Representative Properties (Off-plan)</h3>
 
         <h4>Case A: Ritz-Carlton Creekside 2BR (AED 15.4M)</h4>
         <table class="data-table">
           <thead><tr><th>Item</th><th class="num">AED</th><th class="num">HKD</th><th>Notes</th></tr></thead>
           <tbody>
-            <tr><td>Down payment (50% equity)</td><td class="num">7,700,000</td><td class="num">16,016,000</td><td>Remaining 50% financed</td></tr>
+            <tr><td>Down payment (60% equity)</td><td class="num">9,240,000</td><td class="num">19,219,200</td><td>Remaining 40% financed</td></tr>
             <tr><td>DLD registration (4%)</td><td class="num">616,580</td><td class="num">1,282,486</td><td>4% of price</td></tr>
             <tr><td>Trustee / Title / Oqood / NOC</td><td class="num">12,250</td><td class="num">25,480</td><td>Registration fees</td></tr>
-            <tr><td>Agent fee (2.1%)</td><td class="num">323,400</td><td class="num">672,672</td><td>2.1% of price</td></tr>
-            <tr><td>Mortgage registration (0.25%)</td><td class="num">19,540</td><td class="num">40,643</td><td>0.25% of loan principal</td></tr>
-            <tr><td>Furniture</td><td class="num">400,000</td><td class="num">832,000</td><td>Entry level</td></tr>
-            <tr class="total"><td>Total initial outlay</td><td class="num">~9,071,770</td><td class="num">~18,869,281</td><td></td></tr>
+            <tr><td>Agent fee (2% + VAT)</td><td class="num">323,400</td><td class="num">672,672</td><td>2% + 5% VAT</td></tr>
+            <tr><td>Mortgage registration (0.25%)</td><td class="num">15,690</td><td class="num">32,635</td><td>0.25% of loan + AED 290</td></tr>
+            <tr><td>Mortgage broker fee (1%)</td><td class="num">61,600</td><td class="num">128,128</td><td>1% of loan principal</td></tr>
+            <tr><td>Furniture</td><td class="num">0</td><td class="num">0</td><td>Included with property</td></tr>
+            <tr class="total"><td>Total initial outlay</td><td class="num">~10,269,520</td><td class="num">~21,360,602</td><td></td></tr>
           </tbody>
         </table>
 
@@ -1156,7 +1259,7 @@ AED (UAE bank account)</div>
           </div>
           <div class="field">
             <label><span class="ja">家具家電費用（AED）</span><span class="en">Furniture (AED)</span></label>
-            <input type="number" id="furniture" value="400000" step="50000">
+            <input type="number" id="furniture" value="0" step="50000">
           </div>
         </div>
 
@@ -1452,8 +1555,9 @@ const labels = {
     dld: "DLD登記料（4% + AED 580）", dldNote: "物件価格×4%",
     trustee: "Trustee / Title / Oqood", trusteeNote: "各種登記",
     noc: "NOC手数料", nocNote: "デベロッパー発行",
-    agentFee: "エージェント手数料（2% + VAT）", agentFeeNote: "物件価格×2.1%",
-    mortgageReg: "モーゲージ登記料（0.25%）", mortgageRegNote: "ローン元本×0.25%",
+    agentFee: "エージェント手数料（2% + VAT）", agentFeeNote: "物件価格 × 2% + VAT 5%",
+    mortgageReg: "モーゲージ登記料（0.25%）", mortgageRegNote: "ローン元本×0.25% + AED 290",
+    brokerFee: "モーゲージブローカー手数料（1%）", brokerFeeNote: "ローン元本×1%",
     furniture: "家具家電", furnitureNote: "入居準備一式",
     initialTotal: "初期手出し合計",
     salePrice: "売却価格（グロス）", salePriceNote: "年率値上がり複利",
@@ -1470,8 +1574,9 @@ const labels = {
     dld: "DLD registration (4% + AED 580)", dldNote: "4% of price",
     trustee: "Trustee / Title / Oqood", trusteeNote: "Registrations",
     noc: "NOC fee", nocNote: "Developer-issued",
-    agentFee: "Agent fee (2% + VAT)", agentFeeNote: "2.1% of price",
-    mortgageReg: "Mortgage registration (0.25%)", mortgageRegNote: "0.25% of loan",
+    agentFee: "Agent fee (2% + VAT)", agentFeeNote: "2% + 5% VAT",
+    mortgageReg: "Mortgage registration (0.25%)", mortgageRegNote: "0.25% of loan + AED 290",
+    brokerFee: "Mortgage broker fee (1%)", brokerFeeNote: "1% of loan principal",
     furniture: "Furniture & appliances", furnitureNote: "Move-in package",
     initialTotal: "Total initial outlay",
     salePrice: "Sale price (gross)", salePriceNote: "Compounded appreciation",
@@ -1524,7 +1629,8 @@ function calculate(inp) {
   const noc = 5000;
   const agentFee = p * 0.021;
   const mortgageReg = inp.useMortgage ? loanAmount * 0.0025 + 290 : 0;
-  const initialCashAED = cashDown + dld + trustee + titleDeed + oqood + noc + agentFee + mortgageReg + inp.furniture;
+  const brokerFee = inp.useMortgage ? loanAmount * 0.01 : 0;
+  const initialCashAED = cashDown + dld + trustee + titleDeed + oqood + noc + agentFee + mortgageReg + brokerFee + inp.furniture;
 
   const grossRent = p * (inp.grossYield / 100);
   const vacancyLoss = grossRent * (inp.vacancy / 100);
@@ -1562,7 +1668,7 @@ function calculate(inp) {
   const s3 = scen(7, inp.appreciation * 0.95);
 
   return {
-    cashDown, loanAmount, dld, trustee, titleDeed, oqood, noc, agentFee, mortgageReg,
+    cashDown, loanAmount, dld, trustee, titleDeed, oqood, noc, agentFee, mortgageReg, brokerFee,
     furniture: inp.furniture, initialCashAED,
     grossRent, vacancyLoss, pmFee, serviceCharge, annualLoanPayment: annualLoan, annualNetCF,
     salePrice: main.salePrice, saleAgentFee: main.saleAgentFee, saleNOC: main.saleNOC,
@@ -1632,7 +1738,8 @@ function render() {
     [L("noc"), r.noc, L("nocNote")],
     [L("agentFee"), r.agentFee, L("agentFeeNote")],
     ...(inp.useMortgage ? [[L("mortgageReg"), r.mortgageReg, L("mortgageRegNote")]] : []),
-    [L("furniture"), r.furniture, L("furnitureNote")]
+    ...(inp.useMortgage ? [[L("brokerFee"), r.brokerFee, L("brokerFeeNote")]] : []),
+    ...(inp.furniture > 0 ? [[L("furniture"), r.furniture, L("furnitureNote")]] : [])
   ];
   document.getElementById("initialCashTable").innerHTML = initRows.map(([label, val, note]) =>
     `<tr><td>${label}</td><td class="num">${fmt(val)}</td><td class="num">${fmt(val * fx)}</td><td style="font-size:11px;color:var(--text-muted)">${note}</td></tr>`
