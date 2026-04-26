@@ -754,9 +754,23 @@
   }
 
   @media print {
-    nav.sticky-nav, .print-btn, .lang-toggle, .nav-brochure-btn, .modal-overlay { display: none !important; }
+    @page { size: A4; margin: 12mm; }
+    nav.sticky-nav, .print-btn, .lang-toggle, .nav-brochure-btn, .modal-overlay,
+    .demo-button, #demo-tooltip { display: none !important; }
+    body { background: #fff; font-size: 11px; }
     .sim-card, .answer-block { box-shadow: none; border: 1px solid var(--border); page-break-inside: avoid; }
+    .answer-block { padding: 16px; }
+    .sim-card { padding: 14px; margin-bottom: 10px; }
     .resources-block[open] .resources-content { display: block; }
+    /* Force all collapsibles open in print */
+    details[class~="resources-block"] > .resources-content { display: block !important; }
+    .simulator-container { grid-template-columns: 1fr; gap: 14px; }
+    .input-panel, .output-panel { width: 100%; }
+    .chart-container { height: 280px; page-break-inside: avoid; }
+    table.data-table { font-size: 10px; }
+    table.data-table th, table.data-table td { padding: 6px 8px; }
+    h1, h2, h3, h4 { page-break-after: avoid; }
+    .qa-section, .sim-card, .answer-block { page-break-inside: avoid; }
   }
 
   /* ============ MOBILE RESPONSIVENESS ============ */
@@ -1708,41 +1722,40 @@ AED (UAE bank account)</div>
         </div>
 
         <div class="sim-card">
-          <div class="tab-group">
-            <div class="tab active" data-tab="initial"><span class="ja">初期手出し内訳</span><span class="en">Initial Outlay</span></div>
-            <div class="tab" data-tab="cashflow"><span class="ja">年次キャッシュフロー</span><span class="en">Annual CF</span></div>
-            <div class="tab" data-tab="exit"><span class="ja">EXIT内訳</span><span class="en">Exit Breakdown</span></div>
-            <div class="tab" data-tab="chart"><span class="ja">累積CFチャート</span><span class="en">Cumulative CF</span></div>
-          </div>
-          <div class="tab-content active" id="tab-initial">
-            <table class="data-table">
-              <thead><tr><th><span class="ja">項目</span><span class="en">Item</span></th><th class="num">AED</th><th class="num">HKD</th><th><span class="ja">備考</span><span class="en">Notes</span></th></tr></thead>
-              <tbody id="initialCashTable"></tbody>
-            </table>
-          </div>
-          <div class="tab-content" id="tab-cashflow">
-            <table class="data-table">
-              <thead><tr>
-                <th><span class="ja">年</span><span class="en">Yr</span></th>
-                <th class="num"><span class="ja">賃料</span><span class="en">Rent</span></th>
-                <th class="num"><span class="ja">空室</span><span class="en">Vac</span></th>
-                <th class="num"><span class="ja">PM費</span><span class="en">PM</span></th>
-                <th class="num"><span class="ja">SC</span><span class="en">Svc</span></th>
-                <th class="num"><span class="ja">ローン</span><span class="en">Loan</span></th>
-                <th class="num"><span class="ja">ネットCF</span><span class="en">Net CF</span></th>
-              </tr></thead>
-              <tbody id="cashflowTable"></tbody>
-            </table>
-          </div>
-          <div class="tab-content" id="tab-exit">
-            <table class="data-table">
-              <thead><tr><th><span class="ja">項目</span><span class="en">Item</span></th><th class="num">AED</th><th class="num">HKD</th><th><span class="ja">備考</span><span class="en">Notes</span></th></tr></thead>
-              <tbody id="exitTable"></tbody>
-            </table>
-          </div>
-          <div class="tab-content" id="tab-chart">
-            <div class="chart-container"><canvas id="cumulativeChart"></canvas></div>
-          </div>
+          <h3><span class="count">A</span><span class="ja">初期手出し内訳</span><span class="en">Initial Outlay Breakdown</span></h3>
+          <table class="data-table">
+            <thead><tr><th><span class="ja">項目</span><span class="en">Item</span></th><th class="num">AED</th><th class="num">HKD</th><th><span class="ja">備考</span><span class="en">Notes</span></th></tr></thead>
+            <tbody id="initialCashTable"></tbody>
+          </table>
+        </div>
+
+        <div class="sim-card">
+          <h3><span class="count">B</span><span class="ja">年次キャッシュフロー</span><span class="en">Annual Cash Flow</span></h3>
+          <table class="data-table">
+            <thead><tr>
+              <th><span class="ja">年</span><span class="en">Yr</span></th>
+              <th class="num"><span class="ja">賃料</span><span class="en">Rent</span></th>
+              <th class="num"><span class="ja">空室</span><span class="en">Vac</span></th>
+              <th class="num"><span class="ja">PM費</span><span class="en">PM</span></th>
+              <th class="num"><span class="ja">SC</span><span class="en">Svc</span></th>
+              <th class="num"><span class="ja">ローン</span><span class="en">Loan</span></th>
+              <th class="num"><span class="ja">ネットCF</span><span class="en">Net CF</span></th>
+            </tr></thead>
+            <tbody id="cashflowTable"></tbody>
+          </table>
+        </div>
+
+        <div class="sim-card">
+          <h3><span class="count">C</span><span class="ja">EXIT（売却時）内訳</span><span class="en">Exit (Sale) Breakdown</span></h3>
+          <table class="data-table">
+            <thead><tr><th><span class="ja">項目</span><span class="en">Item</span></th><th class="num">AED</th><th class="num">HKD</th><th><span class="ja">備考</span><span class="en">Notes</span></th></tr></thead>
+            <tbody id="exitTable"></tbody>
+          </table>
+        </div>
+
+        <div class="sim-card">
+          <h3><span class="count">D</span><span class="ja">累積キャッシュフロー チャート</span><span class="en">Cumulative Cash Flow Chart</span></h3>
+          <div class="chart-container"><canvas id="cumulativeChart"></canvas></div>
         </div>
 
         <div class="note">
@@ -1808,7 +1821,7 @@ AED (UAE bank account)</div>
         </div>
 
         <div class="brochure-card">
-          <span class="b-tag offplan">OFF-PLAN · Q1 2028</span>
+          <span class="b-tag ready">READY</span>
           <h4>Six Senses Residences<br>The Palm · 3BR Duplex</h4>
           <div class="b-price">AED 32.0M</div>
           <div class="b-specs"><span><strong>6,151</strong> sqft</span><span><span class="ja">利回り</span><span class="en">Yield</span> <strong>7.8-8.2%</strong></span></div>
@@ -2103,14 +2116,14 @@ document.addEventListener("keydown", (e) => { if (e.key === "Escape") closeBroch
 
 // Prices reflect "Updated Net Price" from latest property sheet (April 2026)
 const presets = {
-  ritz:        { price: 13000000, sqft: 2524, yield: 6.4,  appreciation: 8,  serviceChargePsf: 32.5, type: "branded", furniture: 0 },
-  oneZaabeel:  { price: 13500000, sqft: 2008, yield: 6.0,  appreciation: 7,  serviceChargePsf: 45.0, type: "branded", furniture: 0 },
-  serenia:     { price: 7000000,  sqft: 2193, yield: 7.3,  appreciation: 10, serviceChargePsf: 35.0, type: "branded", furniture: 0 },
-  sixSenses3:  { price: 32000000, sqft: 6151, yield: 8.0,  appreciation: 8,  serviceChargePsf: 40.0, type: "branded", furniture: 0 },
-  sixSenses4:  { price: 32000000, sqft: 4375, yield: 6.5,  appreciation: 8,  serviceChargePsf: 40.0, type: "branded", furniture: 0 },
-  orla:        { price: 31000000, sqft: 4475, yield: 7.8,  appreciation: 9,  serviceChargePsf: 45.0, type: "branded", furniture: 0 },
-  palmJebel:   { price: 18500000, sqft: 7653, yield: 12.5, appreciation: 12, serviceChargePsf: 8.0,  type: "villa",   furniture: 0 },
-  emerald:     { price: 125000000,sqft: 25197,yield: 4.6,  appreciation: 5,  serviceChargePsf: 8.0,  type: "villa",   furniture: 0 }
+  ritz:        { price: 13000000, sqft: 2524, yield: 6.4,  appreciation: 8,  serviceChargePsf: 32.5, type: "branded", furniture: 0, mode: "offplan" },
+  oneZaabeel:  { price: 13500000, sqft: 2008, yield: 6.0,  appreciation: 7,  serviceChargePsf: 45.0, type: "branded", furniture: 0, mode: "ready" },
+  serenia:     { price: 7000000,  sqft: 2193, yield: 7.3,  appreciation: 10, serviceChargePsf: 35.0, type: "branded", furniture: 0, mode: "ready" },
+  sixSenses3:  { price: 32000000, sqft: 6151, yield: 8.0,  appreciation: 8,  serviceChargePsf: 40.0, type: "branded", furniture: 0, mode: "ready" },
+  sixSenses4:  { price: 32000000, sqft: 4375, yield: 6.5,  appreciation: 8,  serviceChargePsf: 40.0, type: "branded", furniture: 0, mode: "offplan" },
+  orla:        { price: 31000000, sqft: 4475, yield: 7.8,  appreciation: 9,  serviceChargePsf: 45.0, type: "branded", furniture: 0, mode: "offplan" },
+  palmJebel:   { price: 18500000, sqft: 7653, yield: 12.5, appreciation: 12, serviceChargePsf: 8.0,  type: "villa",   furniture: 0, mode: "offplan" },
+  emerald:     { price: 125000000,sqft: 25197,yield: 4.6,  appreciation: 5,  serviceChargePsf: 8.0,  type: "villa",   furniture: 0, mode: "ready" }
 };
 
 function loadPreset(key) {
@@ -2124,6 +2137,7 @@ function loadPreset(key) {
   document.getElementById("grossYield").value = pr.yield;
   document.getElementById("appreciation").value = pr.appreciation;
   document.getElementById("furniture").value = pr.furniture;
+  if (pr.mode) document.getElementById("purchaseMode").value = pr.mode;
   render();
   closeBrochureModal();
   document.getElementById("simulator").scrollIntoView({ behavior: "smooth", block: "start" });
@@ -2301,9 +2315,18 @@ function render() {
   document.getElementById("kpiMultiple").textContent = fmtMult(r.multiple);
 
   const s = r.scenarios;
-  document.getElementById("s1Return").textContent = fmtPct(s.s1.return);
-  document.getElementById("s1Irr").textContent = fmtPct(s.s1.irr);
-  document.getElementById("s1Net").textContent = fmt(s.s1.net * fx) + " HKD";
+  // Hide scenario 1 (off-plan flip) for ready properties — it doesn't apply
+  const isReady = inp.purchaseMode === "ready";
+  const s1Card = document.querySelector(".scenario.s1");
+  if (s1Card) s1Card.style.display = isReady ? "none" : "";
+  const scenGrid = document.querySelector(".scenario-grid");
+  if (scenGrid) scenGrid.style.gridTemplateColumns = isReady ? "repeat(2, 1fr)" : "repeat(3, 1fr)";
+
+  if (!isReady) {
+    document.getElementById("s1Return").textContent = fmtPct(s.s1.return);
+    document.getElementById("s1Irr").textContent = fmtPct(s.s1.irr);
+    document.getElementById("s1Net").textContent = fmt(s.s1.net * fx) + " HKD";
+  }
   document.getElementById("s2Return").textContent = fmtPct(s.s2.return);
   document.getElementById("s2Irr").textContent = fmtPct(s.s2.irr);
   document.getElementById("s2Net").textContent = fmt(s.s2.net * fx) + " HKD";
@@ -2350,17 +2373,25 @@ function render() {
     `<tr><td>${label}</td><td class="num">${fmt(val)}</td><td class="num">${fmt(val * fx)}</td><td style="font-size:11px;color:var(--text-muted)">${note}</td></tr>`
   ).join("") + `<tr class="total"><td>${L("netSale")}</td><td class="num">${fmt(r.netSaleProceeds)}</td><td class="num">${fmt(r.netSaleProceeds * fx)}</td><td></td></tr>`;
 
-  drawScenarioChart(r.scenarios);
+  drawScenarioChart(r.scenarios, isReady);
   drawCumulativeChart(r.cashflowSeries);
 }
 
-function drawScenarioChart(s) {
+function drawScenarioChart(s, isReady) {
   const lang = document.body.getAttribute("data-lang") || "ja";
-  const scLabels = lang === "ja"
+  const allLabels = lang === "ja"
     ? ["① オフプラン・リセール (2年)", "② 引渡後・短期売却 (4年)", "③ 中長期保有 (7年)"]
     : ["(1) Off-plan flip (2y)", "(2) Post-handover short (4y)", "(3) Long-term hold (7y)"];
   const retLabel = lang === "ja" ? "累計リターン (%)" : "Total Return (%)";
   const irrLabel = lang === "ja" ? "年率 IRR (%)" : "IRR p.a. (%)";
+
+  // For ready properties, drop scenario 1 (off-plan flip doesn't apply)
+  const scLabels = isReady ? allLabels.slice(1) : allLabels;
+  const retData = isReady ? [s.s2.return*100, s.s3.return*100] : [s.s1.return*100, s.s2.return*100, s.s3.return*100];
+  const irrData = isReady ? [s.s2.irr*100, s.s3.irr*100] : [s.s1.irr*100, s.s2.irr*100, s.s3.irr*100];
+  const colors  = isReady ? ["rgba(16,185,129,0.7)", "rgba(168,85,247,0.7)"] : ["rgba(59,130,246,0.7)", "rgba(16,185,129,0.7)", "rgba(168,85,247,0.7)"];
+  const borders = isReady ? ["#10b981", "#a855f7"] : ["#3b82f6", "#10b981", "#a855f7"];
+
   const ctx = document.getElementById("scenarioChart").getContext("2d");
   if (scenarioChart) scenarioChart.destroy();
   scenarioChart = new Chart(ctx, {
@@ -2368,12 +2399,8 @@ function drawScenarioChart(s) {
     data: {
       labels: scLabels,
       datasets: [
-        { label: retLabel, data: [s.s1.return*100, s.s2.return*100, s.s3.return*100],
-          backgroundColor: ["rgba(59,130,246,0.7)", "rgba(16,185,129,0.7)", "rgba(168,85,247,0.7)"],
-          borderColor: ["#3b82f6", "#10b981", "#a855f7"], borderWidth: 2, yAxisID: "y" },
-        { label: irrLabel, data: [s.s1.irr*100, s.s2.irr*100, s.s3.irr*100],
-          backgroundColor: "rgba(10,37,64,0.7)", borderColor: "#0a2540", borderWidth: 2,
-          yAxisID: "y1", type: "line", tension: 0.3 }
+        { label: retLabel, data: retData, backgroundColor: colors, borderColor: borders, borderWidth: 2, yAxisID: "y" },
+        { label: irrLabel, data: irrData, backgroundColor: "rgba(10,37,64,0.7)", borderColor: "#0a2540", borderWidth: 2, yAxisID: "y1", type: "line", tension: 0.3 }
       ]
     },
     options: {
@@ -2433,15 +2460,7 @@ document.querySelectorAll("input, select").forEach(el => {
   el.addEventListener("change", render);
 });
 
-document.querySelectorAll(".tab").forEach(tab => {
-  tab.addEventListener("click", () => {
-    document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
-    document.querySelectorAll(".tab-content").forEach(c => c.classList.remove("active"));
-    tab.classList.add("active");
-    document.getElementById("tab-" + tab.dataset.tab).classList.add("active");
-    if (tab.dataset.tab === "chart" && cumulativeChart) cumulativeChart.resize();
-  });
-});
+// Tabs replaced with stacked sections — no listeners needed
 
 const sections = document.querySelectorAll(".qa-section, #simulator");
 const navLinks = document.querySelectorAll("nav.sticky-nav .nav-link");
