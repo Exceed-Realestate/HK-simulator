@@ -378,6 +378,40 @@
   .kpi.accent { background: linear-gradient(135deg, var(--accent) 0%, var(--accent-dark) 100%); color: var(--primary); }
   .kpi.accent .kpi-label { color: var(--primary); opacity: 0.7; }
 
+  .scenario-toggles {
+    display: flex; gap: 8px; margin-bottom: 14px; flex-wrap: wrap;
+  }
+  .scenario-toggle {
+    padding: 8px 14px;
+    border: 2px solid var(--border);
+    background: #fff;
+    color: var(--text-muted);
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.15s;
+    font-family: inherit;
+    letter-spacing: 0.2px;
+  }
+  .scenario-toggle:hover:not(:disabled) {
+    border-color: var(--primary);
+    color: var(--primary);
+  }
+  .scenario-toggle.active.s1 { background: var(--s1); color: #fff; border-color: var(--s1); }
+  .scenario-toggle.active.s2 { background: var(--s2); color: #fff; border-color: var(--s2); }
+  .scenario-toggle.active.s3 { background: var(--s3); color: #fff; border-color: var(--s3); }
+  .scenario-toggle:disabled {
+    opacity: 0.35; cursor: not-allowed;
+    background: #f3f4f6; color: #9ca3af; border-color: var(--border);
+  }
+  .scenario-toggle:disabled::after {
+    content: " · 完成物件には適用外";
+    font-weight: 400; font-size: 10px;
+  }
+  body[data-lang="en"] .scenario-toggle:disabled::after {
+    content: " · N/A for Ready";
+  }
   .scenario-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-bottom: 18px; }
   @media (max-width: 768px) { .scenario-grid { grid-template-columns: 1fr; } }
   .scenario { border: 2px solid var(--border); border-radius: 8px; padding: 16px; }
@@ -1694,7 +1728,19 @@ AED (UAE bank account)</div>
         </div>
 
         <div class="sim-card">
-          <h3><span class="count">5</span><span class="ja">3シナリオ比較</span><span class="en">3 Scenario Comparison</span></h3>
+          <h3><span class="count">5</span><span class="ja">シナリオ比較</span><span class="en">Scenario Comparison</span></h3>
+          <p style="font-size:12px;color:var(--text-muted);margin:0 0 12px;"><span class="ja">表示するシナリオを選択してください（複数選択可）：</span><span class="en">Select scenarios to display (multiple allowed):</span></p>
+          <div class="scenario-toggles">
+            <button class="scenario-toggle active s1" id="toggle-s1" onclick="toggleScenario(1)" type="button">
+              <span class="ja">① オフプラン・リセール</span><span class="en">(1) Off-Plan</span>
+            </button>
+            <button class="scenario-toggle active s2" id="toggle-s2" onclick="toggleScenario(2)" type="button">
+              <span class="ja">② 引渡後・短期売却</span><span class="en">(2) Post-Handover</span>
+            </button>
+            <button class="scenario-toggle active s3" id="toggle-s3" onclick="toggleScenario(3)" type="button">
+              <span class="ja">③ 中長期保有</span><span class="en">(3) Long-Term Hold</span>
+            </button>
+          </div>
           <div class="scenario-grid">
             <div class="scenario s1">
               <div class="scenario-title"><span class="ja">シナリオ① オフプラン・リセール</span><span class="en">(1) Off-Plan Assignment</span></div>
@@ -2138,9 +2184,39 @@ function loadPreset(key) {
   document.getElementById("appreciation").value = pr.appreciation;
   document.getElementById("furniture").value = pr.furniture;
   if (pr.mode) document.getElementById("purchaseMode").value = pr.mode;
+  syncScenarioToggles();
   render();
   closeBrochureModal();
   document.getElementById("simulator").scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
+// =========== SCENARIO TOGGLE STATE ===========
+const scenarioVisible = { s1: true, s2: true, s3: true };
+
+function toggleScenario(n) {
+  const key = "s" + n;
+  const btn = document.getElementById("toggle-" + key);
+  if (btn.disabled) return;
+  scenarioVisible[key] = !scenarioVisible[key];
+  btn.classList.toggle("active", scenarioVisible[key]);
+  render();
+}
+
+function syncScenarioToggles() {
+  // For Ready properties, scenario 1 (off-plan flip) doesn't apply
+  const isReady = document.getElementById("purchaseMode").value === "ready";
+  const btn1 = document.getElementById("toggle-s1");
+  if (isReady) {
+    scenarioVisible.s1 = false;
+    btn1.disabled = true;
+    btn1.classList.remove("active");
+  } else {
+    btn1.disabled = false;
+    if (!scenarioVisible.s1) {
+      scenarioVisible.s1 = true;
+      btn1.classList.add("active");
+    }
+  }
 }
 
 const labels = {
@@ -2315,24 +2391,33 @@ function render() {
   document.getElementById("kpiMultiple").textContent = fmtMult(r.multiple);
 
   const s = r.scenarios;
-  // Hide scenario 1 (off-plan flip) for ready properties — it doesn't apply
-  const isReady = inp.purchaseMode === "ready";
-  const s1Card = document.querySelector(".scenario.s1");
-  if (s1Card) s1Card.style.display = isReady ? "none" : "";
-  const scenGrid = document.querySelector(".scenario-grid");
-  if (scenGrid) scenGrid.style.gridTemplateColumns = isReady ? "repeat(2, 1fr)" : "repeat(3, 1fr)";
+  // Sync toggle state with current purchase mode (ready → disable scenario 1)
+  syncScenarioToggles();
 
-  if (!isReady) {
+  // Show/hide each scenario card based on toggle state
+  ["s1","s2","s3"].forEach(key => {
+    const card = document.querySelector(".scenario." + key);
+    if (card) card.style.display = scenarioVisible[key] ? "" : "none";
+  });
+  const visibleCount = ["s1","s2","s3"].filter(k => scenarioVisible[k]).length;
+  const scenGrid = document.querySelector(".scenario-grid");
+  if (scenGrid) scenGrid.style.gridTemplateColumns = `repeat(${Math.max(1, visibleCount)}, 1fr)`;
+
+  if (scenarioVisible.s1) {
     document.getElementById("s1Return").textContent = fmtPct(s.s1.return);
     document.getElementById("s1Irr").textContent = fmtPct(s.s1.irr);
     document.getElementById("s1Net").textContent = fmt(s.s1.net * fx) + " HKD";
   }
-  document.getElementById("s2Return").textContent = fmtPct(s.s2.return);
-  document.getElementById("s2Irr").textContent = fmtPct(s.s2.irr);
-  document.getElementById("s2Net").textContent = fmt(s.s2.net * fx) + " HKD";
-  document.getElementById("s3Return").textContent = fmtPct(s.s3.return);
-  document.getElementById("s3Irr").textContent = fmtPct(s.s3.irr);
-  document.getElementById("s3Net").textContent = fmt(s.s3.net * fx) + " HKD";
+  if (scenarioVisible.s2) {
+    document.getElementById("s2Return").textContent = fmtPct(s.s2.return);
+    document.getElementById("s2Irr").textContent = fmtPct(s.s2.irr);
+    document.getElementById("s2Net").textContent = fmt(s.s2.net * fx) + " HKD";
+  }
+  if (scenarioVisible.s3) {
+    document.getElementById("s3Return").textContent = fmtPct(s.s3.return);
+    document.getElementById("s3Irr").textContent = fmtPct(s.s3.irr);
+    document.getElementById("s3Net").textContent = fmt(s.s3.net * fx) + " HKD";
+  }
 
   const initRows = [
     [L("downPayment"), r.cashDown, L("downPaymentNote")],
@@ -2373,11 +2458,11 @@ function render() {
     `<tr><td>${label}</td><td class="num">${fmt(val)}</td><td class="num">${fmt(val * fx)}</td><td style="font-size:11px;color:var(--text-muted)">${note}</td></tr>`
   ).join("") + `<tr class="total"><td>${L("netSale")}</td><td class="num">${fmt(r.netSaleProceeds)}</td><td class="num">${fmt(r.netSaleProceeds * fx)}</td><td></td></tr>`;
 
-  drawScenarioChart(r.scenarios, isReady);
+  drawScenarioChart(r.scenarios);
   drawCumulativeChart(r.cashflowSeries);
 }
 
-function drawScenarioChart(s, isReady) {
+function drawScenarioChart(s) {
   const lang = document.body.getAttribute("data-lang") || "ja";
   const allLabels = lang === "ja"
     ? ["① オフプラン・リセール (2年)", "② 引渡後・短期売却 (4年)", "③ 中長期保有 (7年)"]
@@ -2385,12 +2470,17 @@ function drawScenarioChart(s, isReady) {
   const retLabel = lang === "ja" ? "累計リターン (%)" : "Total Return (%)";
   const irrLabel = lang === "ja" ? "年率 IRR (%)" : "IRR p.a. (%)";
 
-  // For ready properties, drop scenario 1 (off-plan flip doesn't apply)
-  const scLabels = isReady ? allLabels.slice(1) : allLabels;
-  const retData = isReady ? [s.s2.return*100, s.s3.return*100] : [s.s1.return*100, s.s2.return*100, s.s3.return*100];
-  const irrData = isReady ? [s.s2.irr*100, s.s3.irr*100] : [s.s1.irr*100, s.s2.irr*100, s.s3.irr*100];
-  const colors  = isReady ? ["rgba(16,185,129,0.7)", "rgba(168,85,247,0.7)"] : ["rgba(59,130,246,0.7)", "rgba(16,185,129,0.7)", "rgba(168,85,247,0.7)"];
-  const borders = isReady ? ["#10b981", "#a855f7"] : ["#3b82f6", "#10b981", "#a855f7"];
+  // Filter datasets to visible scenarios only
+  const allColors  = ["rgba(59,130,246,0.7)", "rgba(16,185,129,0.7)", "rgba(168,85,247,0.7)"];
+  const allBorders = ["#3b82f6", "#10b981", "#a855f7"];
+  const keys = ["s1","s2","s3"];
+  const idx = keys.map((k,i) => scenarioVisible[k] ? i : -1).filter(i => i >= 0);
+
+  const scLabels = idx.map(i => allLabels[i]);
+  const retData  = idx.map(i => s[keys[i]].return * 100);
+  const irrData  = idx.map(i => s[keys[i]].irr * 100);
+  const colors   = idx.map(i => allColors[i]);
+  const borders  = idx.map(i => allBorders[i]);
 
   const ctx = document.getElementById("scenarioChart").getContext("2d");
   if (scenarioChart) scenarioChart.destroy();
