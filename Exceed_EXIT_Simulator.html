@@ -787,20 +787,27 @@
     font-weight: 400;
   }
 
+  /* When body has print-sim-only class AND printing → A4 LANDSCAPE */
+  @media print {
+    body.print-sim-only { /* trigger landscape via @page below */ }
+  }
+  @page sim-landscape { size: A4 landscape; margin: 8mm; }
+  body.print-sim-only { page: sim-landscape; }
+
   @media print {
     @page { size: A4; margin: 10mm; }
     body { background: #fff; font-size: 11px; }
     nav.sticky-nav, .print-btn, .lang-toggle, .nav-brochure-btn, .modal-overlay,
     .demo-button, #demo-tooltip { display: none !important; }
 
-    /* Preserve all background colors / gradients in print (don't let browser strip them) */
+    /* Preserve all background colors / gradients in print */
     *, *::before, *::after {
       -webkit-print-color-adjust: exact !important;
       print-color-adjust: exact !important;
       color-adjust: exact !important;
     }
 
-    /* When 'print-sim-only' class is set, hide everything except the simulator */
+    /* ====== Simulator-only print mode (LANDSCAPE) ====== */
     body.print-sim-only header.site-header,
     body.print-sim-only nav.sticky-nav,
     body.print-sim-only .hero,
@@ -815,85 +822,120 @@
     body.print-sim-only .container { padding: 0 !important; max-width: 100% !important; }
 
     body.print-sim-only .sim-title-bar {
-      padding: 8px 14px !important; margin-bottom: 8px !important;
+      padding: 10px 16px !important; margin-bottom: 10px !important;
       border-radius: 4px !important;
+      page-break-inside: avoid !important;
+      page-break-after: avoid !important;
     }
-    body.print-sim-only .sim-title-bar h2 { font-size: 14px !important; margin: 0 !important; }
-    body.print-sim-only .sim-title-bar .kicker { font-size: 8px !important; }
-    body.print-sim-only .sim-title-bar .subtitle { font-size: 9px !important; }
+    body.print-sim-only .sim-title-bar h2 { font-size: 16px !important; margin: 0 !important; }
+    body.print-sim-only .sim-title-bar .kicker { font-size: 9px !important; }
+    body.print-sim-only .sim-title-bar .subtitle { font-size: 10px !important; }
     body.print-sim-only .sim-title-bar .nav-brochure-btn { display: none !important; }
 
+    /* Two-column layout (matches on-screen) — fits in landscape A4 */
     body.print-sim-only .simulator-container {
-      grid-template-columns: 1fr !important; gap: 6px !important;
-    }
-    body.print-sim-only .input-panel {
       display: grid !important;
-      grid-template-columns: repeat(2, 1fr) !important;
-      gap: 6px !important;
+      grid-template-columns: 240px 1fr !important;
+      gap: 8px !important;
+      width: 100% !important;
     }
-    body.print-sim-only .input-panel .sim-card { margin-bottom: 0 !important; padding: 8px 10px !important; }
-
-    body.print-sim-only .sim-card {
+    body.print-sim-only .input-panel { display: block !important; }
+    body.print-sim-only .input-panel > .sim-card {
       padding: 8px 10px !important;
       margin-bottom: 6px !important;
+    }
+
+    body.print-sim-only .sim-card {
+      padding: 10px 12px !important;
+      margin-bottom: 8px !important;
       border: 1px solid #d1d5db !important;
       box-shadow: none !important;
       page-break-inside: avoid !important;
       break-inside: avoid !important;
     }
     body.print-sim-only .sim-card h3 {
-      font-size: 9px !important;
-      padding-bottom: 4px !important;
-      margin: 0 0 5px !important;
-      letter-spacing: 0.3px !important;
+      font-size: 10px !important;
+      padding-bottom: 5px !important;
+      margin: 0 0 6px !important;
     }
     body.print-sim-only .sim-card h3 .count {
-      width: 16px !important; height: 16px !important; line-height: 16px !important;
-      font-size: 9px !important; margin-right: 5px !important;
+      width: 18px !important; height: 18px !important; line-height: 18px !important;
+      font-size: 10px !important; margin-right: 6px !important;
     }
 
-    body.print-sim-only .field { margin-bottom: 4px !important; }
-    body.print-sim-only .field label { font-size: 8px !important; margin-bottom: 1px !important; }
+    body.print-sim-only .field { margin-bottom: 5px !important; }
+    body.print-sim-only .field label { font-size: 9px !important; margin-bottom: 2px !important; }
     body.print-sim-only .field input,
     body.print-sim-only .field select {
-      padding: 3px 5px !important; font-size: 9px !important;
+      padding: 4px 6px !important; font-size: 10px !important;
       border: 1px solid #d1d5db !important;
     }
-    body.print-sim-only .field-row { gap: 5px !important; }
+    body.print-sim-only .field-row { gap: 6px !important; }
     body.print-sim-only .checkbox-field { padding: 2px 0 !important; }
-    body.print-sim-only .checkbox-field label { font-size: 9px !important; }
+    body.print-sim-only .checkbox-field label { font-size: 10px !important; }
 
     body.print-sim-only .kpi-grid {
-      grid-template-columns: repeat(4, 1fr) !important;
-      gap: 4px !important;
-      margin-bottom: 6px !important;
+      display: grid !important;
+      grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+      gap: 6px !important;
+      margin-bottom: 8px !important;
+      page-break-inside: avoid !important;
+      break-inside: avoid !important;
+    }
+    body.print-sim-only .kpi {
+      padding: 10px 12px !important;
+      overflow: hidden !important;
+    }
+    body.print-sim-only .kpi::before { display: none !important; }
+    body.print-sim-only .kpi-value { font-size: 14px !important; word-break: keep-all !important; }
+    body.print-sim-only .kpi-label { font-size: 8px !important; margin-bottom: 3px !important; letter-spacing: 0.4px !important; }
+    body.print-sim-only .kpi-sub { font-size: 8px !important; margin-top: 2px !important; }
+
+    body.print-sim-only .scenario-grid {
+      display: grid !important;
+      grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+      gap: 6px !important;
+      margin-bottom: 8px !important;
       page-break-inside: avoid !important;
     }
-    body.print-sim-only .kpi { padding: 8px 10px !important; }
-    body.print-sim-only .kpi::before { display: none !important; }
-    body.print-sim-only .kpi-value { font-size: 13px !important; }
-    body.print-sim-only .kpi-label { font-size: 7.5px !important; margin-bottom: 2px !important; letter-spacing: 0.5px !important; }
-    body.print-sim-only .kpi-sub { font-size: 7.5px !important; margin-top: 1px !important; }
-
-    body.print-sim-only .scenario-grid { gap: 6px !important; margin-bottom: 6px !important; }
     body.print-sim-only .scenario {
-      padding: 7px 9px !important;
+      padding: 8px 10px !important;
       page-break-inside: avoid !important;
       border: 1px solid #d1d5db !important;
+      overflow: hidden !important;
     }
-    body.print-sim-only .scenario-title { font-size: 9px !important; }
-    body.print-sim-only .scenario-desc { font-size: 8px !important; margin-bottom: 4px !important; min-height: 0 !important; }
-    body.print-sim-only .scenario-metric { font-size: 8.5px !important; padding: 1px 0 !important; }
+    body.print-sim-only .scenario-title { font-size: 10px !important; word-break: keep-all !important; }
+    body.print-sim-only .scenario-desc { font-size: 8.5px !important; margin-bottom: 5px !important; min-height: 0 !important; }
+    body.print-sim-only .scenario-metric { font-size: 9px !important; padding: 2px 0 !important; }
 
-    body.print-sim-only .chart-container { height: 160px !important; page-break-inside: avoid !important; }
-    body.print-sim-only .chart-container.small { height: 140px !important; }
+    body.print-sim-only .chart-container {
+      height: 200px !important;
+      max-height: 200px !important;
+      width: 100% !important;
+      page-break-inside: avoid !important;
+      position: relative !important;
+    }
+    body.print-sim-only .chart-container.small { height: 180px !important; max-height: 180px !important; }
+    body.print-sim-only .chart-container canvas {
+      max-width: 100% !important;
+      max-height: 100% !important;
+      width: 100% !important;
+      height: 100% !important;
+    }
 
-    body.print-sim-only table.data-table { font-size: 8.5px !important; margin: 4px 0 !important; }
+    body.print-sim-only table.data-table { font-size: 9px !important; margin: 4px 0 !important; }
     body.print-sim-only table.data-table th,
-    body.print-sim-only table.data-table td { padding: 3px 6px !important; }
+    body.print-sim-only table.data-table td { padding: 4px 7px !important; }
     body.print-sim-only table tr { page-break-inside: avoid !important; }
 
-    body.print-sim-only .note { font-size: 7.5px !important; padding: 6px 8px !important; line-height: 1.4 !important; }
+    body.print-sim-only .note {
+      font-size: 8px !important;
+      padding: 6px 10px !important;
+      line-height: 1.5 !important;
+      page-break-inside: avoid !important;
+      page-break-before: auto !important;
+      margin-top: 8px !important;
+    }
 
     /* Default whole-page print fallback */
     body:not(.print-sim-only) .sim-card,
@@ -2257,6 +2299,18 @@ function setLanguage(lang) {
   document.documentElement.setAttribute("lang", lang);
   render();
 }
+
+// Resize charts when entering/leaving print preview so they fit print layout
+window.addEventListener("beforeprint", () => {
+  if (typeof scenarioChart !== "undefined" && scenarioChart) scenarioChart.resize();
+  if (typeof cumulativeChart !== "undefined" && cumulativeChart) cumulativeChart.resize();
+});
+window.addEventListener("afterprint", () => {
+  setTimeout(() => {
+    if (typeof scenarioChart !== "undefined" && scenarioChart) scenarioChart.resize();
+    if (typeof cumulativeChart !== "undefined" && cumulativeChart) cumulativeChart.resize();
+  }, 100);
+});
 
 // =========== PRINT / PDF (Simulator only — native preview) ===========
 // Click → browser opens print preview showing only the simulator → user
