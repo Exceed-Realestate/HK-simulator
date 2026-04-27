@@ -6,6 +6,7 @@
 <title>香港投資家向け戦略パッケージ | EXCEED REAL ESTATE</title>
 <link rel="icon" type="image/jpeg" href="./exceed_logo.jpg">
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 <style>
   :root {
     --primary: #0a2540;
@@ -929,8 +930,8 @@
         <button id="btn-ja" class="active" onclick="setLanguage('ja')">日本語</button>
         <button id="btn-en" onclick="setLanguage('en')">EN</button>
       </div>
-      <button class="print-btn" onclick="window.print()">
-        <span class="ja">印刷 / PDF</span><span class="en">Print / PDF</span>
+      <button class="print-btn" id="pdfBtn" onclick="downloadSimulatorPDF()">
+        <span class="ja">📄 シミュレーターPDF</span><span class="en">📄 Simulator PDF</span>
       </button>
     </div>
   </div>
@@ -2148,6 +2149,59 @@ function setLanguage(lang) {
   document.getElementById("btn-en").classList.toggle("active", lang === "en");
   document.documentElement.setAttribute("lang", lang);
   render();
+}
+
+// =========== PDF DOWNLOAD (Simulator only) ===========
+function downloadSimulatorPDF() {
+  // Close any open modal/demo first
+  if (typeof closeBrochureModal === "function") closeBrochureModal();
+  if (typeof cancelDemo === "function" && document.body.classList.contains("demo-running")) cancelDemo();
+
+  const btn = document.getElementById("pdfBtn");
+  const lang = document.body.getAttribute("data-lang") || "ja";
+  const originalLabel = btn.innerHTML;
+  btn.innerHTML = lang === "ja" ? "⏳ PDF生成中…" : "⏳ Generating PDF…";
+  btn.disabled = true;
+
+  const element = document.getElementById("simulator");
+  const filename = `Exceed_HK_Simulator_${new Date().toISOString().slice(0,10)}.pdf`;
+
+  // Make sure all charts are fully rendered before capture
+  if (scenarioChart) scenarioChart.update("none");
+  if (cumulativeChart) cumulativeChart.update("none");
+
+  const opt = {
+    margin: [10, 8, 10, 8],
+    filename: filename,
+    image: { type: "jpeg", quality: 0.95 },
+    html2canvas: {
+      scale: 2,
+      useCORS: true,
+      logging: false,
+      backgroundColor: "#ffffff",
+      windowWidth: 1280
+    },
+    jsPDF: {
+      unit: "mm",
+      format: "a4",
+      orientation: "portrait",
+      compress: true
+    },
+    pagebreak: { mode: ["css", "legacy"], avoid: [".sim-card", ".scenario", ".kpi"] }
+  };
+
+  // Small delay to let UI update (button label)
+  setTimeout(() => {
+    html2pdf().set(opt).from(element).save().then(() => {
+      btn.innerHTML = originalLabel;
+      btn.disabled = false;
+    }).catch((err) => {
+      console.error("PDF generation error", err);
+      btn.innerHTML = originalLabel;
+      btn.disabled = false;
+      alert(lang === "ja" ? "PDF生成に失敗しました。再度お試しください。" : "PDF generation failed. Please try again.");
+    });
+  }, 100);
 }
 
 function openBrochureModal() {
