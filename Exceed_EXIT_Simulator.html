@@ -788,6 +788,89 @@
     font-weight: 400;
   }
 
+  /* ============ PDF EXPORT MODE ============ */
+  /* Applied via JS onclone — does not affect on-screen view */
+  body.pdf-mode { background: #fff !important; }
+  body.pdf-mode .demo-button,
+  body.pdf-mode #demo-tooltip,
+  body.pdf-mode .nav-brochure-btn,
+  body.pdf-mode .scenario-toggles,
+  body.pdf-mode .modal-overlay { display: none !important; }
+  body.pdf-mode .sim-wrapper {
+    max-width: 760px;
+    margin: 0 auto;
+    padding-top: 0 !important;
+    border-top: none !important;
+    margin-top: 0 !important;
+  }
+  body.pdf-mode .sim-title-bar {
+    padding: 10px 16px !important;
+    border-radius: 4px !important;
+    margin-bottom: 14px !important;
+  }
+  body.pdf-mode .sim-title-bar h2 { font-size: 16px !important; margin: 0 !important; }
+  body.pdf-mode .sim-title-bar .kicker { font-size: 9px !important; }
+  body.pdf-mode .sim-title-bar .subtitle { font-size: 10px !important; }
+  body.pdf-mode .simulator-container {
+    grid-template-columns: 1fr !important;
+    gap: 10px !important;
+  }
+  body.pdf-mode .input-panel {
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 8px !important;
+  }
+  body.pdf-mode .input-panel .sim-card { margin-bottom: 0 !important; padding: 10px !important; }
+  body.pdf-mode .sim-card {
+    padding: 10px 12px !important;
+    margin-bottom: 8px !important;
+    border: 1px solid #e5e7eb !important;
+    box-shadow: none !important;
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+  }
+  body.pdf-mode .sim-card h3 {
+    font-size: 10px !important;
+    padding-bottom: 5px !important;
+    margin: 0 0 6px !important;
+    letter-spacing: 0.4px !important;
+  }
+  body.pdf-mode .sim-card h3.sim-title { /* if any */ font-size: 14px !important; }
+  body.pdf-mode .field { margin-bottom: 5px !important; }
+  body.pdf-mode .field label { font-size: 9px !important; margin-bottom: 2px !important; }
+  body.pdf-mode .field input,
+  body.pdf-mode .field select {
+    padding: 4px 6px !important; font-size: 10px !important;
+    background: #fafbfc !important;
+  }
+  body.pdf-mode .field-row { gap: 6px !important; }
+  body.pdf-mode .checkbox-field { padding: 2px 0 !important; }
+  body.pdf-mode .checkbox-field label { font-size: 10px !important; }
+  body.pdf-mode .kpi-grid {
+    grid-template-columns: repeat(4, 1fr) !important;
+    gap: 6px !important;
+    margin-bottom: 10px !important;
+  }
+  body.pdf-mode .kpi { padding: 10px !important; }
+  body.pdf-mode .kpi::before { display: none !important; }
+  body.pdf-mode .kpi-value { font-size: 14px !important; }
+  body.pdf-mode .kpi-label { font-size: 8px !important; margin-bottom: 3px !important; }
+  body.pdf-mode .kpi-sub { font-size: 8px !important; margin-top: 2px !important; }
+  body.pdf-mode .scenario-grid {
+    gap: 8px !important;
+    margin-bottom: 10px !important;
+  }
+  body.pdf-mode .scenario { padding: 8px 10px !important; page-break-inside: avoid !important; }
+  body.pdf-mode .scenario-title { font-size: 10px !important; }
+  body.pdf-mode .scenario-desc { font-size: 9px !important; margin-bottom: 6px !important; min-height: 0 !important; }
+  body.pdf-mode .scenario-metric { font-size: 9.5px !important; padding: 2px 0 !important; }
+  body.pdf-mode .chart-container { height: 180px !important; }
+  body.pdf-mode .chart-container.small { height: 160px !important; }
+  body.pdf-mode table.data-table { font-size: 9.5px !important; margin: 6px 0 !important; }
+  body.pdf-mode table.data-table th,
+  body.pdf-mode table.data-table td { padding: 4px 7px !important; }
+  body.pdf-mode .note { font-size: 8.5px !important; padding: 7px 10px !important; line-height: 1.5 !important; }
+
   @media print {
     @page { size: A4; margin: 12mm; }
     nav.sticky-nav, .print-btn, .lang-toggle, .nav-brochure-btn, .modal-overlay,
@@ -2163,44 +2246,61 @@ function downloadSimulatorPDF() {
   btn.innerHTML = lang === "ja" ? "⏳ PDF生成中…" : "⏳ Generating PDF…";
   btn.disabled = true;
 
-  const element = document.getElementById("simulator");
   const filename = `Exceed_HK_Simulator_${new Date().toISOString().slice(0,10)}.pdf`;
 
-  // Make sure all charts are fully rendered before capture
-  if (scenarioChart) scenarioChart.update("none");
-  if (cumulativeChart) cumulativeChart.update("none");
+  // Apply pdf-mode to the LIVE page so charts re-render at the correct size
+  document.body.classList.add("pdf-mode");
 
-  const opt = {
-    margin: [10, 8, 10, 8],
-    filename: filename,
-    image: { type: "jpeg", quality: 0.95 },
-    html2canvas: {
-      scale: 2,
-      useCORS: true,
-      logging: false,
-      backgroundColor: "#ffffff",
-      windowWidth: 1280
-    },
-    jsPDF: {
-      unit: "mm",
-      format: "a4",
-      orientation: "portrait",
-      compress: true
-    },
-    pagebreak: { mode: ["css", "legacy"], avoid: [".sim-card", ".scenario", ".kpi"] }
-  };
-
-  // Small delay to let UI update (button label)
+  // Allow CSS to apply, then resize charts to match new container, then capture
   setTimeout(() => {
-    html2pdf().set(opt).from(element).save().then(() => {
-      btn.innerHTML = originalLabel;
-      btn.disabled = false;
-    }).catch((err) => {
-      console.error("PDF generation error", err);
-      btn.innerHTML = originalLabel;
-      btn.disabled = false;
-      alert(lang === "ja" ? "PDF生成に失敗しました。再度お試しください。" : "PDF generation failed. Please try again.");
-    });
+    if (scenarioChart) scenarioChart.resize();
+    if (cumulativeChart) cumulativeChart.resize();
+
+    setTimeout(() => {
+      const element = document.getElementById("simulator");
+      const opt = {
+        margin: [8, 8, 8, 8],
+        filename: filename,
+        image: { type: "jpeg", quality: 0.95 },
+        html2canvas: {
+          scale: 2,
+          useCORS: true,
+          logging: false,
+          backgroundColor: "#ffffff",
+          width: element.offsetWidth,
+          windowWidth: element.offsetWidth
+        },
+        jsPDF: {
+          unit: "mm",
+          format: "a4",
+          orientation: "portrait",
+          compress: true
+        },
+        pagebreak: {
+          mode: ["avoid-all", "css", "legacy"],
+          avoid: [".sim-card", ".scenario", ".kpi", ".kpi-grid", ".scenario-grid", ".chart-container", "table", "tr"]
+        }
+      };
+
+      html2pdf().set(opt).from(element).save().then(() => {
+        document.body.classList.remove("pdf-mode");
+        // Resize charts back to normal layout
+        setTimeout(() => {
+          if (scenarioChart) scenarioChart.resize();
+          if (cumulativeChart) cumulativeChart.resize();
+        }, 100);
+        btn.innerHTML = originalLabel;
+        btn.disabled = false;
+      }).catch((err) => {
+        console.error("PDF generation error", err);
+        document.body.classList.remove("pdf-mode");
+        if (scenarioChart) scenarioChart.resize();
+        if (cumulativeChart) cumulativeChart.resize();
+        btn.innerHTML = originalLabel;
+        btn.disabled = false;
+        alert(lang === "ja" ? "PDF生成に失敗しました。再度お試しください。" : "PDF generation failed. Please try again.");
+      });
+    }, 200);
   }, 100);
 }
 
