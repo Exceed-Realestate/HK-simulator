@@ -793,6 +793,13 @@
     nav.sticky-nav, .print-btn, .lang-toggle, .nav-brochure-btn, .modal-overlay,
     .demo-button, #demo-tooltip { display: none !important; }
 
+    /* Preserve all background colors / gradients in print (don't let browser strip them) */
+    *, *::before, *::after {
+      -webkit-print-color-adjust: exact !important;
+      print-color-adjust: exact !important;
+      color-adjust: exact !important;
+    }
+
     /* When 'print-sim-only' class is set, hide everything except the simulator */
     body.print-sim-only header.site-header,
     body.print-sim-only nav.sticky-nav,
