@@ -787,15 +787,8 @@
     font-weight: 400;
   }
 
-  /* When body has print-sim-only class AND printing → A4 LANDSCAPE */
   @media print {
-    body.print-sim-only { /* trigger landscape via @page below */ }
-  }
-  @page sim-landscape { size: A4 landscape; margin: 8mm; }
-  body.print-sim-only { page: sim-landscape; }
-
-  @media print {
-    @page { size: A4; margin: 10mm; }
+    @page { size: A4 portrait; margin: 10mm; }
     body { background: #fff; font-size: 11px; }
     nav.sticky-nav, .print-btn, .lang-toggle, .nav-brochure-btn, .modal-overlay,
     .demo-button, #demo-tooltip { display: none !important; }
@@ -2312,9 +2305,9 @@ window.addEventListener("afterprint", () => {
   }, 100);
 });
 
-// =========== PRINT / PDF (Simulator only — native preview) ===========
+// =========== PRINT / PDF (Simulator only — native preview, LANDSCAPE) ===========
 // Click → browser opens print preview showing only the simulator → user
-// chooses "Save as PDF" or prints. No external library needed.
+// chooses "Save as PDF" or prints. Injects a landscape @page rule at runtime.
 function downloadSimulatorPDF() {
   // Close any open modal/demo first
   if (typeof closeBrochureModal === "function") closeBrochureModal();
@@ -2324,22 +2317,41 @@ function downloadSimulatorPDF() {
   const originalTitle = document.title;
   document.title = `Exceed_HK_Simulator_${new Date().toISOString().slice(0,10)}`;
 
+  // Inject landscape @page rule at runtime. Appending late = wins in source order.
+  // Using explicit dimensions (297mm × 210mm = A4 landscape) for max browser compat.
+  let pageStyle = document.getElementById("sim-page-rule");
+  if (pageStyle) pageStyle.remove();
+  pageStyle = document.createElement("style");
+  pageStyle.id = "sim-page-rule";
+  pageStyle.textContent = "@media print { @page { size: 297mm 210mm !important; margin: 8mm !important; } }";
+  document.head.appendChild(pageStyle);
+
   // Toggle simulator-only print mode
   document.body.classList.add("print-sim-only");
 
-  // Trigger native print preview (user sees preview, can save as PDF or print)
+  // Force chart resize before print fires
+  if (typeof scenarioChart !== "undefined" && scenarioChart) scenarioChart.resize();
+  if (typeof cumulativeChart !== "undefined" && cumulativeChart) cumulativeChart.resize();
+
+  // Trigger native print preview after style + class apply
   setTimeout(() => {
     window.print();
-  }, 50);
+  }, 150);
 
-  // Cleanup after dialog closes (afterprint fires whether user saved or cancelled)
+  // Cleanup after dialog closes
   const cleanup = () => {
     document.body.classList.remove("print-sim-only");
     document.title = originalTitle;
+    const el = document.getElementById("sim-page-rule");
+    if (el) el.remove();
+    setTimeout(() => {
+      if (typeof scenarioChart !== "undefined" && scenarioChart) scenarioChart.resize();
+      if (typeof cumulativeChart !== "undefined" && cumulativeChart) cumulativeChart.resize();
+    }, 100);
     window.removeEventListener("afterprint", cleanup);
   };
   window.addEventListener("afterprint", cleanup);
-  // Safari fallback (afterprint not always reliable): remove class after a delay
+  // Safari fallback (afterprint not always reliable)
   setTimeout(cleanup, 60000);
 }
 
