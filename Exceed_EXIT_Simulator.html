@@ -355,6 +355,26 @@
   .checkbox-field input[type="checkbox"] { width: 16px; height: 16px; }
   .checkbox-field label { margin: 0; font-size: 13px; color: var(--text); }
 
+  .currency-bar {
+    display: flex; align-items: center; gap: 18px; flex-wrap: wrap;
+    background: linear-gradient(135deg, #f8fafc 0%, #fff 100%);
+    border: 1px solid var(--border); border-radius: 12px;
+    padding: 12px 18px; margin-bottom: 16px;
+  }
+  .currency-bar .cb-title {
+    font-size: 12px; font-weight: 700; color: var(--primary);
+    letter-spacing: 0.05em; text-transform: uppercase;
+    border-right: 2px solid var(--accent); padding-right: 14px;
+  }
+  .currency-bar .cb-item { display: flex; align-items: center; gap: 8px; }
+  .currency-bar label { font-size: 12px; color: var(--text-muted); margin: 0; font-weight: 600; }
+  .currency-bar select, .currency-bar input {
+    padding: 6px 10px; border: 1px solid var(--border);
+    border-radius: 6px; font-size: 13px; min-width: 110px;
+    background: #fff; color: var(--text); font-weight: 600;
+  }
+  .currency-bar input { min-width: 90px; max-width: 110px; }
+
   .kpi-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -1874,28 +1894,40 @@ AED (UAE bank account)</div>
             <label><span class="ja">保有期間（年）</span><span class="en">Holding period (years)</span></label>
             <input type="number" id="holdYears" value="5" min="1" max="15" step="1">
           </div>
-          <div class="field">
-            <label>AED → HKD</label>
-            <input type="number" id="fxRate" value="2.08" step="0.01">
-          </div>
         </div>
       </div>
 
       <!-- OUTPUTS -->
       <div class="output-panel">
+        <div class="currency-bar">
+          <div class="cb-title"><span class="ja">通貨設定</span><span class="en">Currency</span></div>
+          <div class="cb-item">
+            <label><span class="ja">表示通貨</span><span class="en">Display</span></label>
+            <select id="currency">
+              <option value="HKD">HKD (香港ドル)</option>
+              <option value="USD">USD (米ドル)</option>
+              <option value="JPY">JPY (日本円)</option>
+              <option value="EUR">EUR (ユーロ)</option>
+            </select>
+          </div>
+          <div class="cb-item">
+            <label>AED → <span id="fxRateLabel">HKD</span></label>
+            <input type="number" id="fxRate" value="2.08" step="0.01">
+          </div>
+        </div>
         <div class="kpi-grid">
           <div class="kpi">
             <div class="kpi-label"><span class="ja">初期手出し合計</span><span class="en">Initial Outlay</span></div>
             <div class="kpi-value" id="kpiInitialCash">—</div>
-            <div class="kpi-sub" id="kpiInitialCashHkd">— HKD</div>
+            <div class="kpi-sub" id="kpiInitialCashHkd">—</div>
           </div>
           <div class="kpi">
             <div class="kpi-label"><span class="ja">売却時グロス</span><span class="en">Gross Sale</span></div>
             <div class="kpi-value" id="kpiSalePrice">—</div>
-            <div class="kpi-sub" id="kpiSalePriceHkd">— HKD</div>
+            <div class="kpi-sub" id="kpiSalePriceHkd">—</div>
           </div>
           <div class="kpi accent">
-            <div class="kpi-label"><span class="ja">香港着金ネット</span><span class="en">Net to HK</span></div>
+            <div class="kpi-label"><span class="ja">着金ネット</span><span class="en">Net Proceeds</span></div>
             <div class="kpi-value" id="kpiNetHkd">—</div>
             <div class="kpi-sub" id="kpiNetAed">— AED</div>
           </div>
@@ -1926,21 +1958,21 @@ AED (UAE bank account)</div>
               <div class="scenario-desc"><span class="ja">44%支払完了後NOC取得 / 2年保有</span><span class="en">NOC after ≥44% paid / 2-yr hold</span></div>
               <div class="scenario-metric"><span><span class="ja">累計リターン</span><span class="en">Total Return</span></span><span class="val" id="s1Return">—</span></div>
               <div class="scenario-metric"><span><span class="ja">年率 IRR</span><span class="en">IRR p.a.</span></span><span class="val" id="s1Irr">—</span></div>
-              <div class="scenario-metric"><span><span class="ja">HK着金ネット</span><span class="en">Net to HK</span></span><span class="val" id="s1Net">—</span></div>
+              <div class="scenario-metric"><span><span class="ja">着金ネット</span><span class="en">Net Proceeds</span></span><span class="val" id="s1Net">—</span></div>
             </div>
             <div class="scenario s2">
               <div class="scenario-title"><span class="ja">シナリオ② 引渡後・短期売却</span><span class="en">(2) Post-Handover Short</span></div>
               <div class="scenario-desc"><span class="ja">鍵受取後12ヶ月売却 / 3〜4年保有</span><span class="en">Sell 12 mo after keys / 3–4 yr</span></div>
               <div class="scenario-metric"><span><span class="ja">累計リターン</span><span class="en">Total Return</span></span><span class="val" id="s2Return">—</span></div>
               <div class="scenario-metric"><span><span class="ja">年率 IRR</span><span class="en">IRR p.a.</span></span><span class="val" id="s2Irr">—</span></div>
-              <div class="scenario-metric"><span><span class="ja">HK着金ネット</span><span class="en">Net to HK</span></span><span class="val" id="s2Net">—</span></div>
+              <div class="scenario-metric"><span><span class="ja">着金ネット</span><span class="en">Net Proceeds</span></span><span class="val" id="s2Net">—</span></div>
             </div>
             <div class="scenario s3">
               <div class="scenario-title"><span class="ja">シナリオ③ 中長期保有</span><span class="en">(3) Long-Term Hold</span></div>
               <div class="scenario-desc"><span class="ja">インカム＋キャピタル / 7年保有</span><span class="en">Income + capital / 7-yr hold</span></div>
               <div class="scenario-metric"><span><span class="ja">累計リターン</span><span class="en">Total Return</span></span><span class="val" id="s3Return">—</span></div>
               <div class="scenario-metric"><span><span class="ja">年率 IRR</span><span class="en">IRR p.a.</span></span><span class="val" id="s3Irr">—</span></div>
-              <div class="scenario-metric"><span><span class="ja">HK着金ネット</span><span class="en">Net to HK</span></span><span class="val" id="s3Net">—</span></div>
+              <div class="scenario-metric"><span><span class="ja">着金ネット</span><span class="en">Net Proceeds</span></span><span class="val" id="s3Net">—</span></div>
             </div>
           </div>
           <div class="chart-container small"><canvas id="scenarioChart"></canvas></div>
@@ -1949,7 +1981,7 @@ AED (UAE bank account)</div>
         <div class="sim-card">
           <h3><span class="count">A</span><span class="ja">初期手出し内訳</span><span class="en">Initial Outlay Breakdown</span></h3>
           <table class="data-table">
-            <thead><tr><th><span class="ja">項目</span><span class="en">Item</span></th><th class="num">AED</th><th class="num">HKD</th><th><span class="ja">備考</span><span class="en">Notes</span></th></tr></thead>
+            <thead><tr><th><span class="ja">項目</span><span class="en">Item</span></th><th class="num">AED</th><th class="num"><span class="cur-label">HKD</span></th><th><span class="ja">備考</span><span class="en">Notes</span></th></tr></thead>
             <tbody id="initialCashTable"></tbody>
           </table>
         </div>
@@ -1973,7 +2005,7 @@ AED (UAE bank account)</div>
         <div class="sim-card">
           <h3><span class="count">C</span><span class="ja">EXIT（売却時）内訳</span><span class="en">Exit (Sale) Breakdown</span></h3>
           <table class="data-table">
-            <thead><tr><th><span class="ja">項目</span><span class="en">Item</span></th><th class="num">AED</th><th class="num">HKD</th><th><span class="ja">備考</span><span class="en">Notes</span></th></tr></thead>
+            <thead><tr><th><span class="ja">項目</span><span class="en">Item</span></th><th class="num">AED</th><th class="num"><span class="cur-label">HKD</span></th><th><span class="ja">備考</span><span class="en">Notes</span></th></tr></thead>
             <tbody id="exitTable"></tbody>
           </table>
         </div>
@@ -2659,9 +2691,20 @@ function getInputs() {
     appreciation: +document.getElementById("appreciation").value || 0,
     holdYears: +document.getElementById("holdYears").value || 1,
     completionYear: +document.getElementById("completionYear").value || new Date().getFullYear(),
-    fxRate: +document.getElementById("fxRate").value || 2.08
+    fxRate: +document.getElementById("fxRate").value || 2.08,
+    currency: document.getElementById("currency").value || "HKD"
   };
 }
+
+const DEFAULT_FX = { HKD: 2.08, USD: 0.27, JPY: 40.0, EUR: 0.25 };
+
+document.getElementById("currency").addEventListener("change", (e) => {
+  const cur = e.target.value;
+  document.getElementById("fxRate").value = DEFAULT_FX[cur] ?? 1;
+  document.getElementById("fxRateLabel").textContent = cur;
+  document.querySelectorAll(".cur-label").forEach(el => { el.textContent = cur; });
+  render();
+});
 
 let scenarioChart = null, cumulativeChart = null;
 
@@ -2669,13 +2712,17 @@ function render() {
   const inp = getInputs();
   const r = calculate(inp);
   const fx = inp.fxRate;
+  const cur = inp.currency;
   const L = (k) => getLabel(k);
 
+  document.querySelectorAll(".cur-label").forEach(el => { el.textContent = cur; });
+  document.getElementById("fxRateLabel").textContent = cur;
+
   document.getElementById("kpiInitialCash").textContent = fmt(r.initialCashAED) + " AED";
-  document.getElementById("kpiInitialCashHkd").textContent = fmt(r.initialCashAED * fx) + " HKD";
+  document.getElementById("kpiInitialCashHkd").textContent = fmt(r.initialCashAED * fx) + " " + cur;
   document.getElementById("kpiSalePrice").textContent = fmt(r.salePrice) + " AED";
-  document.getElementById("kpiSalePriceHkd").textContent = fmt(r.salePrice * fx) + " HKD";
-  document.getElementById("kpiNetHkd").textContent = fmt(r.netSaleProceeds * fx) + " HKD";
+  document.getElementById("kpiSalePriceHkd").textContent = fmt(r.salePrice * fx) + " " + cur;
+  document.getElementById("kpiNetHkd").textContent = fmt(r.netSaleProceeds * fx) + " " + cur;
   document.getElementById("kpiNetAed").textContent = fmt(r.netSaleProceeds) + " AED";
   document.getElementById("kpiIrr").textContent = fmtPct(r.irr);
   document.getElementById("kpiMultiple").textContent = fmtMult(r.multiple);
@@ -2696,17 +2743,17 @@ function render() {
   if (scenarioVisible.s1) {
     document.getElementById("s1Return").textContent = fmtPct(s.s1.return);
     document.getElementById("s1Irr").textContent = fmtPct(s.s1.irr);
-    document.getElementById("s1Net").textContent = fmt(s.s1.net * fx) + " HKD";
+    document.getElementById("s1Net").textContent = fmt(s.s1.net * fx) + " " + cur;
   }
   if (scenarioVisible.s2) {
     document.getElementById("s2Return").textContent = fmtPct(s.s2.return);
     document.getElementById("s2Irr").textContent = fmtPct(s.s2.irr);
-    document.getElementById("s2Net").textContent = fmt(s.s2.net * fx) + " HKD";
+    document.getElementById("s2Net").textContent = fmt(s.s2.net * fx) + " " + cur;
   }
   if (scenarioVisible.s3) {
     document.getElementById("s3Return").textContent = fmtPct(s.s3.return);
     document.getElementById("s3Irr").textContent = fmtPct(s.s3.irr);
-    document.getElementById("s3Net").textContent = fmt(s.s3.net * fx) + " HKD";
+    document.getElementById("s3Net").textContent = fmt(s.s3.net * fx) + " " + cur;
   }
 
   const initRows = [
